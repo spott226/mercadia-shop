@@ -197,8 +197,9 @@ function validate() {
 
   $("error").textContent = "";
 
-  if (state.cart.size === 0)
+  if (state.cart.size === 0) {
     return "Agrega al menos 1 producto.";
+  }
 
   const name = $("customerName")?.value.trim();
   const phone = $("customerPhone")?.value.trim();
@@ -206,28 +207,49 @@ function validate() {
   const onlyLetters = /^[a-zA-ZÁÉÍÓÚáéíóúñÑ\s]+$/;
   const onlyNumbers = /^[0-9]+$/;
 
-  if (!name || !onlyLetters.test(name))
+  if (!name || !onlyLetters.test(name)) {
     return "Nombre inválido.";
+  }
 
-  if (!phone || !onlyNumbers.test(phone) || phone.length !== 10)
+  if (!phone || !onlyNumbers.test(phone) || phone.length !== 10) {
     return "Teléfono inválido.";
+  }
 
-  if (state.biz.checkoutMode === "registro") return null;
+  // Si el negocio es tipo registro (ej: cursos)
+  if (state.biz.checkoutMode === "registro") {
+    return null;
+  }
 
+  // Validación de dirección para envíos
   const street = $("street")?.value.trim();
   const neighborhood = $("neighborhood")?.value.trim();
   const zip = $("zip")?.value.trim();
   const city = $("city")?.value.trim();
   const stateField = $("state")?.value.trim();
 
-  if (!street) return "Ingresa calle.";
-  if (!neighborhood) return "Ingresa colonia.";
-  if (!zip || zip.length !== 5) return "CP inválido.";
-  if (!city) return "Ingresa ciudad.";
-  if (!stateField) return "Ingresa estado.";
+  if (!street) {
+    return "Ingresa calle.";
+  }
+
+  if (!neighborhood) {
+    return "Ingresa colonia.";
+  }
+
+  if (!zip || zip.length !== 5) {
+    return "CP inválido.";
+  }
+
+  if (!city) {
+    return "Ingresa ciudad.";
+  }
+
+  if (!stateField) {
+    return "Ingresa estado.";
+  }
 
   return null;
 }
+
 
 function buildMessage({ total }) {
 
@@ -238,14 +260,16 @@ function buildMessage({ total }) {
     const p = state.biz.products.find(x => x.id === item.productId);
     if (!p) continue;
 
-    items.push(`- ${sanitizeText(p.name)} x${item.qty}`);
+    const safeName = sanitizeText(p.name);
+
+    items.push(`- ${safeName} x${item.qty}`);
   }
 
   const name = sanitizeText($("customerName").value);
   const phone = sanitizePhone($("customerPhone").value);
-
   const bizNameSafe = sanitizeText(state.biz.name);
 
+  // Mensaje para cursos / registros
   if (state.biz.checkoutMode === "registro") {
 
     return [
@@ -260,8 +284,10 @@ function buildMessage({ total }) {
       `💰 *Costo total:* ${money(total)}`,
       `💳 *Apartado:* ${money(state.biz.paymentInfo?.deposit || 0)}`
     ].join("\n");
+
   }
 
+  // Mensaje para pedidos con envío
   const street = sanitizeText($("street").value);
   const neighborhood = sanitizeText($("neighborhood").value);
   const zip = sanitizeText($("zip").value);
@@ -292,7 +318,6 @@ function openWhatsapp(message) {
 }
 
 async function init() {
-
   try {
 
     const slug = getSlug();
@@ -300,17 +325,20 @@ async function init() {
 
     document.title = state.biz.name || "Mercadia";
 
+    // Si es modo registro (ej: cursos), ocultar dirección
     if (state.biz.checkoutMode === "registro") {
       document.querySelectorAll(".address-field")
         .forEach(el => el.style.display = "none");
     }
 
-    $("sendBtn").addEventListener("click", () => {
+    const btn = $("sendBtn");
 
-      const btn = $("sendBtn");
+    btn.addEventListener("click", () => {
 
+      // evitar doble envío
       if (cooldownTimer) return;
 
+      // honeypot anti-bot
       if (isHoneypotTripped()) {
         $("error").textContent = "No se pudo enviar.";
         startCooldown(btn);
@@ -323,7 +351,6 @@ async function init() {
       const err = validate();
 
       if (err) {
-
         btn.textContent = "Enviar pedido por WhatsApp";
         btn.disabled = false;
         $("error").textContent = err;
@@ -333,30 +360,31 @@ async function init() {
       const totals = recalc();
       const msg = buildMessage(totals);
 
+      // activar cooldown
       startCooldown(btn);
 
       setTimeout(() => {
-
         try {
           openWhatsapp(msg);
         } catch (e) {
           stopCooldown(btn);
-          $("error").textContent = "Error abriendo WhatsApp.";
+          $("error").textContent = e.message || "Error al abrir WhatsApp.";
         }
-
       }, 600);
 
     });
 
+    // render inicial
     renderTheme();
     renderLogo();
-    renderProducts();
+    render();       // ← importante: aquí se dibujan productos con variantes
     recalc();
 
   } catch (e) {
 
     $("bizName").textContent = "Error";
     $("bizNote").textContent = e.message;
+
   }
 }
 
