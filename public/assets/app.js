@@ -1,486 +1,535 @@
 // public/assets/app.js
 (() => {
+  const $ = (id) => document.getElementById(id);
 
-const $ = (id) => document.getElementById(id);
+  const state = {
+    biz: null,
+    cart: new Map()
+  }; // cart: key -> { productId, qty, variants }
 
-const state = {
-  biz: null,
-  cart: new Map()
-};
+  // =========================
+  // Seguridad básica (sin backend)
+  // =========================
 
-// =========================
-// Seguridad básica
-// =========================
+  const COOLDOWN_SECONDS = 10;
+  let cooldownTimer = null;
+  let cooldownRemaining = 0;
 
-const COOLDOWN_SECONDS = 10;
-let cooldownTimer = null;
-let cooldownRemaining = 0;
-
-const sanitizeText = (value, maxLen = 120) => {
-  let s = String(value ?? "");
-  s = s.replace(/[\u0000-\u001F\u007F-\u009F]/g, "");
-  s = s.replace(/\s+/g, " ").trim();
-  if (maxLen && s.length > maxLen) s = s.slice(0, maxLen);
-  return s;
-};
-
-const sanitizePhone = (value, maxLen = 15) => {
-  let s = String(value ?? "").replace(/[^\d]/g, "");
-  if (maxLen && s.length > maxLen) s = s.slice(0, maxLen);
-  return s;
-};
-
-const isHoneypotTripped = () => {
-  const hp = $("companyWebsite");
-  if (!hp) return false;
-  const v = sanitizeText(hp.value, 80);
-  return v.length > 0;
-};
-
-const startCooldown = (btn) => {
-  if (cooldownTimer) return;
-
-  cooldownRemaining = COOLDOWN_SECONDS;
-  btn.disabled = true;
-
-  const tick = () => {
-
-    if (cooldownRemaining <= 0) {
-      clearInterval(cooldownTimer);
-      cooldownTimer = null;
-      cooldownRemaining = 0;
-      btn.disabled = false;
-      btn.textContent = "Enviar pedido por WhatsApp";
-      return;
-    }
-
-    btn.textContent = `Espera ${cooldownRemaining}s…`;
-    cooldownRemaining -= 1;
-
+  const sanitizeText = (value, maxLen = 120) => {
+    let s = String(value ?? "");
+    s = s.replace(/[\u0000-\u001F\u007F-\u009F]/g, "");
+    s = s.replace(/\s+/g, " ").trim();
+    if (maxLen && s.length > maxLen) s = s.slice(0, maxLen);
+    return s;
   };
 
-  tick();
-  cooldownTimer = setInterval(tick, 1000);
-};
+  const sanitizePhone = (value, maxLen = 15) => {
+    let s = String(value ?? "").replace(/[^\d]/g, "");
+    if (maxLen && s.length > maxLen) s = s.slice(0, maxLen);
+    return s;
+  };
 
-const stopCooldown = (btn) => {
-  if (cooldownTimer) {
-    clearInterval(cooldownTimer);
-    cooldownTimer = null;
-  }
+  const isHoneypotTripped = () => {
+    const hp = $("companyWebsite");
+    if (!hp) return false;
+    const v = sanitizeText(hp.value, 80);
+    return v.length > 0;
+  };
 
-  cooldownRemaining = 0;
+  const startCooldown = (btn) => {
+    if (cooldownTimer) return;
 
-  if (btn) {
-    btn.disabled = false;
-    btn.textContent = "Enviar pedido por WhatsApp";
-  }
-};
+    cooldownRemaining = COOLDOWN_SECONDS;
+    btn.disabled = true;
 
-const money = (n) =>
-  Number(n || 0).toLocaleString("es-MX", {
-    style: "currency",
-    currency: state.biz?.currency || "MXN"
-  });
+    const tick = () => {
+      if (cooldownRemaining <= 0) {
+        clearInterval(cooldownTimer);
+        cooldownTimer = null;
+        cooldownRemaining = 0;
+        btn.disabled = false;
+        btn.textContent = "Enviar pedido por WhatsApp";
+        return;
+      }
 
-const getSlug = () => {
-  const qs = new URLSearchParams(location.search);
-  if (qs.get("b")) return qs.get("b").trim();
-  return "demo";
-};
+      btn.textContent = `Espera ${cooldownRemaining}s…`;
+      cooldownRemaining -= 1;
+    };
 
-async function loadBusiness(slug) {
+    tick();
+    cooldownTimer = setInterval(tick, 1000);
+  };
 
-  const res = await fetch(`/business/${encodeURIComponent(slug)}.json`, {
-    cache: "no-store"
-  });
+  const stopCooldown = (btn) => {
+    if (cooldownTimer) {
+      clearInterval(cooldownTimer);
+      cooldownTimer = null;
+    }
 
-  if (!res.ok) throw new Error(`No existe el negocio "${slug}".`);
+    cooldownRemaining = 0;
 
-  return res.json();
-}
+    if (btn) {
+      btn.disabled = false;
+      btn.textContent = "Enviar pedido por WhatsApp";
+    }
+  };
 
-const norm = (s) => String(s || "").trim().toLowerCase();
-
-function renderTheme() {
-  if (state.biz.theme?.primary) {
-    document.documentElement.style.setProperty(
-      "--primary",
-      state.biz.theme.primary
-    );
-  }
-}
-
-function renderLogo() {
-
-  if (!state.biz.logo) return;
-
-  const container = $("logoContainer");
-  if (!container) return;
-
-  container.innerHTML = "";
-
-  const img = document.createElement("img");
-  img.src = state.biz.logo;
-  img.className = "logo";
-
-  container.appendChild(img);
-}
-
-function getDefaultImage(p) {
-
-  const colorVar = (p.variants || []).find((v) => norm(v.type) === "color");
-
-  const first = colorVar?.options?.[0];
-  const img = typeof first === "string" ? null : first?.image;
-
-  return img || p.image || "";
-}
-
-function readSelectedVariants(selects) {
-
-  const obj = {};
-
-  selects.forEach((s) => {
-    obj[String(s.dataset.variant || "").trim()] = s.value;
-  });
-
-  return obj;
-}
-
-function makeCartKey(productId, variantsObj) {
-
-  const keys = Object.keys(variantsObj || {}).sort();
-
-  const sig = keys
-    .map((k) => `${k}=${variantsObj[k]}`)
-    .join("|");
-
-  return `${productId}__${sig}`;
-}
-
-function renderLineItems(container, productId) {
-
-  const items = Array.from(state.cart.entries()).filter(
-    ([, v]) => v.productId === productId
-  );
-
-  container.innerHTML = "";
-
-  items.forEach(([key, item]) => {
-
-    const row = document.createElement("div");
-    row.className = "line-item";
-
-    const variantsText =
-      item.variants && Object.keys(item.variants).length
-        ? Object.entries(item.variants)
-            .map(([k, v]) => `${k}: ${v}`)
-            .join(" · ")
-        : "Sin opciones";
-
-    row.innerHTML = `
-      <div class="line-item-left">
-        <div class="line-item-variants">${variantsText}</div>
-        <button class="line-remove" type="button">Quitar</button>
-      </div>
-      <input class="line-qty" type="number" min="1" step="1" value="${item.qty}" />
-    `;
-
-    const qtyInput = row.querySelector(".line-qty");
-    const removeBtn = row.querySelector(".line-remove");
-
-    qtyInput.addEventListener("input", () => {
-
-      const v = Math.max(1, parseInt(qtyInput.value || "1", 10));
-
-      const current = state.cart.get(key);
-      if (!current) return;
-
-      current.qty = v;
-
-      state.cart.set(key, current);
-
-      recalc(true);
-
+  const money = (n) =>
+    Number(n || 0).toLocaleString("es-MX", {
+      style: "currency",
+      currency: state.biz?.currency || "MXN"
     });
 
-    removeBtn.addEventListener("click", () => {
+  const getSlug = () => {
+    const path = location.pathname.replace(/^\/+|\/+$/g, "");
 
-      state.cart.delete(key);
+    if (!path) return "lunaboutiqueags";
+    if (path === "luna") return "lunaboutiqueags";
+    if (path === "f1") return "playerasf1";
+    if (path === "CheliSpa") return "chelispa";
 
-      renderLineItems(container, productId);
+    return path;
+  };
 
-      recalc(true);
-
+  async function loadBusiness(slug) {
+    const res = await fetch(`/business/${encodeURIComponent(slug)}.json`, {
+      cache: "no-store"
     });
 
-    container.appendChild(row);
+    if (!res.ok) throw new Error(`No existe el negocio "${slug}".`);
+    return res.json();
+  }
 
-  });
-}
+  const norm = (s) => String(s || "").trim().toLowerCase();
 
-function renderShippingOptions() {
+  function renderTheme() {
+    if (state.biz.theme?.primary) {
+      document.documentElement.style.setProperty(
+        "--primary",
+        state.biz.theme.primary
+      );
+    }
+  }
 
-  const shippingSelect = $("shippingType");
+  function renderLogo() {
+    if (!state.biz.logo) return;
 
-  if (!shippingSelect) return;
+    const container = $("logoContainer");
+    if (!container) return;
 
-  shippingSelect.innerHTML = "";
+    container.innerHTML = "";
 
-  if (state.biz.shipping?.enabled && state.biz.shipping.options) {
+    const img = document.createElement("img");
+    img.src = state.biz.logo;
+    img.className = "logo";
 
-    state.biz.shipping.options.forEach((opt) => {
+    container.appendChild(img);
+  }
 
-      const option = document.createElement("option");
+  function getDefaultImage(p) {
+    const colorVar = (p.variants || []).find((v) => norm(v.type) === "color");
+    const first = colorVar?.options?.[0];
+    const img = typeof first === "string" ? null : first?.image;
+    return img || p.image || "";
+  }
 
-      option.value = opt.id;
-      option.textContent = `${opt.label} (${money(opt.cost)})`;
+  function readSelectedVariants(selects) {
+    const obj = {};
 
-      shippingSelect.appendChild(option);
-
+    selects.forEach((s) => {
+      obj[String(s.dataset.variant || "").trim()] = s.value;
     });
 
-    shippingSelect.addEventListener("change", () => recalc(true));
-  }
-}
-
-function recalc(animate = false) {
-
-  const byId = new Map(state.biz.products.map((p) => [p.id, p]));
-
-  let subtotal = 0;
-
-  for (const [, item] of state.cart.entries()) {
-
-    const p = byId.get(item.productId);
-
-    if (!p) continue;
-
-    subtotal += Number(p.price) * Number(item.qty);
+    return obj;
   }
 
-  let shipping = 0;
+  function makeCartKey(productId, variantsObj) {
+    const keys = Object.keys(variantsObj || {}).sort();
+    const sig = keys.map((k) => `${k}=${variantsObj[k]}`).join("|");
+    return `${productId}__${sig}`;
+  }
 
-  if (state.biz.shipping?.enabled && state.biz.shipping.options) {
-
-    const selected = $("shippingType")?.value;
-
-    const option = state.biz.shipping.options.find(
-      (o) => o.id === selected
+  function renderLineItems(container, productId) {
+    const items = Array.from(state.cart.entries()).filter(
+      ([, v]) => v.productId === productId
     );
 
-    shipping = option ? Number(option.cost) : 0;
+    container.innerHTML = "";
+
+    items.forEach(([key, item]) => {
+      const row = document.createElement("div");
+      row.className = "line-item";
+
+      const variantsText =
+        item.variants && Object.keys(item.variants).length
+          ? Object.entries(item.variants)
+              .map(([k, v]) => `${k}: ${v}`)
+              .join(" · ")
+          : "Sin opciones";
+
+      row.innerHTML = `
+        <div class="line-item-left">
+          <div class="line-item-variants">${variantsText}</div>
+          <button class="line-remove" type="button">Quitar</button>
+        </div>
+        <input class="line-qty" type="number" min="1" step="1" value="${item.qty}" />
+      `;
+
+      const qtyInput = row.querySelector(".line-qty");
+      const removeBtn = row.querySelector(".line-remove");
+
+      qtyInput.addEventListener("input", () => {
+        const v = Math.max(1, parseInt(qtyInput.value || "1", 10));
+        const current = state.cart.get(key);
+        if (!current) return;
+
+        current.qty = v;
+        state.cart.set(key, current);
+
+        recalc(true);
+      });
+
+      removeBtn.addEventListener("click", () => {
+        state.cart.delete(key);
+        renderLineItems(container, productId);
+        recalc(true);
+      });
+
+      container.appendChild(row);
+    });
   }
 
-  const total = subtotal + shipping;
+  function render() {
+    renderTheme();
+    renderLogo();
 
-  $("subtotal").textContent = money(subtotal);
-  $("shipping").textContent = money(shipping);
-  $("total").textContent = money(total);
+    $("bizName").textContent = state.biz.name || "Pedido";
+    $("bizNote").textContent = state.biz.note || "";
 
-  if (animate) {
+    const list = $("productList");
+    list.innerHTML = "";
 
-    const totalEl = $("total");
+    state.biz.products.forEach((p) => {
+      const row = document.createElement("div");
+      row.className = "product";
 
-    totalEl.classList.add("pulse");
+      const currentImage = getDefaultImage(p);
 
-    setTimeout(() => totalEl.classList.remove("pulse"), 300);
+      const variantsHtml = (p.variants || [])
+        .map((variant) => {
+          const type = variant.type || "Opción";
+
+          const options = (variant.options || [])
+            .map((o) => {
+              const name = typeof o === "string" ? o : o?.name;
+              return `<option value="${name}">${name}</option>`;
+            })
+            .join("");
+
+          return `
+            <label class="label small">${type}</label>
+            <select class="variant-select" data-variant="${type}">
+              ${options}
+            </select>
+          `;
+        })
+        .join("");
+
+      row.innerHTML = `
+        <div class="product-left">
+          ${
+            currentImage
+              ? `<img src="${currentImage}" class="product-img" alt="${p.name}">`
+              : ""
+          }
+          <div class="product-info">
+            <div class="product-name">${p.name}</div>
+            <div class="price">${money(p.price)}</div>
+
+            ${variantsHtml}
+
+            <button class="add-variant btn-mini" type="button">
+              Agregar esta combinación
+            </button>
+
+            <div class="line-items"></div>
+          </div>
+        </div>
+      `;
+
+      const img = row.querySelector(".product-img");
+      const selects = Array.from(row.querySelectorAll(".variant-select"));
+      const addBtn = row.querySelector(".add-variant");
+      const lineItemsBox = row.querySelector(".line-items");
+
+      const colorVar = (p.variants || []).find((v) => norm(v.type) === "color");
+      const colorSelect = selects.find(
+        (s) => norm(s.dataset.variant) === "color"
+      );
+
+      if (colorVar && colorSelect && img) {
+        colorSelect.addEventListener("change", () => {
+          const selectedName = colorSelect.value;
+
+          const selectedOpt = (colorVar.options || []).find((o) => {
+            const name = typeof o === "string" ? o : o?.name;
+            return name === selectedName;
+          });
+
+          const newImg =
+            typeof selectedOpt === "string" ? null : selectedOpt?.image;
+
+          if (newImg) img.src = newImg;
+        });
+      }
+
+      addBtn.addEventListener("click", () => {
+        const variants = readSelectedVariants(selects);
+        const key = makeCartKey(p.id, variants);
+
+        const existing = state.cart.get(key);
+
+        if (existing) {
+          existing.qty += 1;
+          state.cart.set(key, existing);
+        } else {
+          state.cart.set(key, {
+            productId: p.id,
+            qty: 1,
+            variants
+          });
+        }
+
+        row.classList.add("active");
+
+        renderLineItems(lineItemsBox, p.id);
+        recalc(true);
+      });
+
+      renderLineItems(lineItemsBox, p.id);
+
+      list.appendChild(row);
+    });
+
+    renderShippingOptions();
+    recalc();
   }
 
-  return { subtotal, shipping, total };
-}
+  function renderShippingOptions() {
+    const shippingSelect = $("shippingType");
+    if (!shippingSelect) return;
 
-function validate() {
+    shippingSelect.innerHTML = "";
 
-  $("error").textContent = "";
+    if (state.biz.shipping?.enabled && state.biz.shipping.options) {
+      state.biz.shipping.options.forEach((opt) => {
+        const option = document.createElement("option");
+        option.value = opt.id;
+        option.textContent = `${opt.label} (${money(opt.cost)})`;
+        shippingSelect.appendChild(option);
+      });
 
-  if (state.cart.size === 0)
-    return "Agrega al menos 1 combinación (talla/color)";
-
-  const name = $("customerName")?.value.trim();
-  const phone = $("customerPhone")?.value.trim();
-
-  const street = $("street")?.value.trim();
-  const neighborhood = $("neighborhood")?.value.trim();
-  const zip = $("zip")?.value.trim();
-  const city = $("city")?.value.trim();
-  const stateField = $("state")?.value.trim();
-
-  const onlyLetters = /^[a-zA-ZÁÉÍÓÚáéíóúñÑ\s]+$/;
-  const onlyNumbers = /^[0-9]+$/;
-
-  if (!name || !onlyLetters.test(name)) return "Nombre inválido.";
-  if (!phone || !onlyNumbers.test(phone) || phone.length !== 10)
-    return "Teléfono inválido (10 dígitos).";
-
-  if (!street) return "Ingresa calle y número.";
-  if (!neighborhood) return "Ingresa colonia.";
-  if (!zip || !onlyNumbers.test(zip) || zip.length !== 5)
-    return "Código postal inválido (5 dígitos).";
-  if (!city) return "Ingresa ciudad.";
-  if (!stateField) return "Ingresa estado.";
-
-  return null;
-}
-
-function buildMessage({ subtotal, shipping, total }) {
-
-  const byId = new Map(state.biz.products.map((p) => [p.id, p]));
-
-  const items = [];
-
-  for (const [, item] of state.cart.entries()) {
-
-    const p = byId.get(item.productId);
-
-    if (!p) continue;
-
-    const lineTotal = Number(p.price) * Number(item.qty);
-
-    const variantsText =
-      item.variants && Object.keys(item.variants).length
-        ? Object.entries(item.variants)
-            .map(
-              ([k, v]) =>
-                `${sanitizeText(k, 30)}: ${sanitizeText(v, 40)}`
-            )
-            .join(", ")
-        : "";
-
-    const safeProductName = sanitizeText(p.name, 80);
-
-    items.push(
-      `- ${safeProductName}${
-        variantsText ? ` (${variantsText})` : ""
-      } x${item.qty} = ${money(lineTotal)}`
-    );
+      shippingSelect.addEventListener("change", () => recalc(true));
+    }
   }
 
-  const name = sanitizeText($("customerName").value, 60);
-  const phone = sanitizePhone($("customerPhone").value, 15);
+  function recalc(animate = false) {
+    const byId = new Map(state.biz.products.map((p) => [p.id, p]));
 
-  const street = sanitizeText($("street").value, 80);
-  const neighborhood = sanitizeText($("neighborhood").value, 60);
-  const zip = sanitizePhone($("zip").value, 10);
-  const city = sanitizeText($("city").value, 50);
-  const stateField = sanitizeText($("state").value, 50);
+    let subtotal = 0;
 
-  const address = [
-    street,
-    `Col. ${neighborhood}`,
-    `CP ${zip}`,
-    city,
-    stateField
-  ].join(", ");
+    for (const [, item] of state.cart.entries()) {
+      const p = byId.get(item.productId);
+      if (!p) continue;
 
-  const shippingSelectedRaw =
-    $("shippingType")?.selectedOptions?.[0]?.textContent || "";
+      subtotal += Number(p.price) * Number(item.qty);
+    }
 
-  const shippingSelected = sanitizeText(shippingSelectedRaw, 80);
+    let shipping = 0;
 
-  const bizNameSafe = sanitizeText(state.biz.name, 80);
+    if (state.biz.shipping?.enabled && state.biz.shipping.options) {
+      const selected = $("shippingType")?.value;
+      const option = state.biz.shipping.options.find((o) => o.id === selected);
+      shipping = option ? Number(option.cost) : 0;
+    }
 
-  return [
-    `🧾 *Pedido para ${bizNameSafe}*`,
-    "",
-    `👤 *Cliente:* ${name}`,
-    `📱 *Teléfono:* ${phone}`,
-    `📍 *Dirección:* ${address}`,
-    `🚚 *Envío:* ${shippingSelected}`,
-    "",
-    "🛒 *Productos:*",
-    items.join("\n"),
-    "",
-    `Subtotal: ${money(subtotal)}`,
-    `Envío: ${money(shipping)}`,
-    `*Total: ${money(total)}*`
-  ].join("\n");
-}
+    const total = subtotal + shipping;
 
-function openWhatsapp(message) {
+    $("subtotal").textContent = money(subtotal);
+    $("shipping").textContent = money(shipping);
+    $("total").textContent = money(total);
 
-  const phone = String(state.biz.whatsappPhone || "").replace(/[^\d]/g, "");
+    if (animate) {
+      const totalEl = $("total");
+      totalEl.classList.add("pulse");
+      setTimeout(() => totalEl.classList.remove("pulse"), 300);
+    }
 
-  if (!phone) throw new Error("Falta whatsappPhone en el JSON.");
+    return { subtotal, shipping, total };
+  }
 
-  const url = `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
+  function validate() {
+    $("error").textContent = "";
 
-  location.href = url;
-}
+    if (state.cart.size === 0)
+      return "Agrega al menos 1 combinación (talla/color)";
 
-async function init() {
+    const name = $("customerName")?.value.trim();
+    const phone = $("customerPhone")?.value.trim();
+    const street = $("street")?.value.trim();
+    const neighborhood = $("neighborhood")?.value.trim();
+    const zip = $("zip")?.value.trim();
+    const city = $("city")?.value.trim();
+    const stateField = $("state")?.value.trim();
 
-  try {
+    const onlyLetters = /^[a-zA-ZÁÉÍÓÚáéíóúñÑ\s]+$/;
+    const onlyNumbers = /^[0-9]+$/;
 
-    const slug = getSlug();
+    if (!name || !onlyLetters.test(name)) return "Nombre inválido.";
+    if (!phone || !onlyNumbers.test(phone) || phone.length !== 10)
+      return "Teléfono inválido (10 dígitos).";
+    if (!street) return "Ingresa calle y número.";
+    if (!neighborhood) return "Ingresa colonia.";
+    if (!zip || !onlyNumbers.test(zip) || zip.length !== 5)
+      return "Código postal inválido (5 dígitos).";
+    if (!city) return "Ingresa ciudad.";
+    if (!stateField) return "Ingresa estado.";
 
-    state.biz = await loadBusiness(slug);
+    return null;
+  }
 
-    $("sendBtn").addEventListener("click", () => {
+  function buildMessage({ subtotal, shipping, total }) {
+    const byId = new Map(state.biz.products.map((p) => [p.id, p]));
+    const items = [];
 
-      const btn = $("sendBtn");
+    for (const [, item] of state.cart.entries()) {
+      const p = byId.get(item.productId);
+      if (!p) continue;
 
-      if (cooldownTimer) return;
+      const lineTotal = Number(p.price) * Number(item.qty);
 
-      if (isHoneypotTripped()) {
+      const variantsText =
+        item.variants && Object.keys(item.variants).length
+          ? Object.entries(item.variants)
+              .map(
+                ([k, v]) =>
+                  `${sanitizeText(k, 30)}: ${sanitizeText(v, 40)}`
+              )
+              .join(", ")
+          : "";
 
-        $("error").textContent = "No se pudo enviar el pedido.";
+      const safeProductName = sanitizeText(p.name, 80);
+
+      items.push(
+        `- ${safeProductName}${
+          variantsText ? ` (${variantsText})` : ""
+        } x${item.qty} = ${money(lineTotal)}`
+      );
+    }
+
+    const name = sanitizeText($("customerName").value, 60);
+    const phone = sanitizePhone($("customerPhone").value, 15);
+    const street = sanitizeText($("street").value, 80);
+    const neighborhood = sanitizeText($("neighborhood").value, 60);
+    const zip = sanitizePhone($("zip").value, 10);
+    const city = sanitizeText($("city").value, 50);
+    const stateField = sanitizeText($("state").value, 50);
+
+    const address = [
+      street,
+      `Col. ${neighborhood}`,
+      `CP ${zip}`,
+      city,
+      stateField
+    ]
+      .map((x) => sanitizeText(x, 120))
+      .join(", ");
+
+    const shippingSelectedRaw =
+      $("shippingType")?.selectedOptions?.[0]?.textContent || "";
+
+    const shippingSelected = sanitizeText(shippingSelectedRaw, 80);
+    const bizNameSafe = sanitizeText(state.biz.name, 80);
+
+    return [
+      `🧾 *Pedido para ${bizNameSafe}*`,
+      "",
+      `👤 *Cliente:* ${name}`,
+      `📱 *Teléfono:* ${phone}`,
+      `📍 *Dirección:* ${address}`,
+      `🚚 *Envío:* ${shippingSelected}`,
+      "",
+      "🛒 *Productos:*",
+      items.join("\n"),
+      "",
+      `Subtotal: ${money(subtotal)}`,
+      `Envío: ${money(shipping)}`,
+      `*Total: ${money(total)}*`
+    ].join("\n");
+  }
+
+  function openWhatsapp(message) {
+    const phone = String(state.biz.whatsappPhone || "").replace(/[^\d]/g, "");
+
+    if (!phone) throw new Error("Falta whatsappPhone en el JSON.");
+
+    const url = `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
+    location.href = url;
+  }
+
+  async function init() {
+    try {
+      const slug = getSlug();
+
+      state.biz = await loadBusiness(slug);
+
+      document.title = state.biz.name || "Mercadia";
+
+      $("sendBtn").addEventListener("click", () => {
+        const btn = $("sendBtn");
+
+        if (cooldownTimer) return;
+
+        if (isHoneypotTripped()) {
+          $("error").textContent = "No se pudo enviar el pedido.";
+          startCooldown(btn);
+          return;
+        }
+
+        btn.textContent = "Enviando...";
+        btn.disabled = true;
+
+        const err = validate();
+
+        if (err) {
+          btn.textContent = "Enviar pedido por WhatsApp";
+          btn.disabled = false;
+          $("error").textContent = err;
+          return;
+        }
+
+        const totals = recalc();
+        const msg = buildMessage(totals);
 
         startCooldown(btn);
 
-        return;
-      }
+        setTimeout(() => {
+          try {
+            openWhatsapp(msg);
+          } catch (e) {
+            stopCooldown(btn);
+            $("error").textContent =
+              e.message || "Error al abrir WhatsApp.";
+          }
+        }, 600);
+      });
 
-      btn.textContent = "Enviando...";
-      btn.disabled = true;
-
-      const err = validate();
-
-      if (err) {
-
-        btn.textContent = "Enviar pedido por WhatsApp";
-        btn.disabled = false;
-
-        $("error").textContent = err;
-
-        return;
-      }
-
-      const totals = recalc();
-
-      const msg = buildMessage(totals);
-
-      startCooldown(btn);
-
-      setTimeout(() => {
-
-        try {
-
-          openWhatsapp(msg);
-
-        } catch (e) {
-
-          stopCooldown(btn);
-
-          $("error").textContent =
-            e.message || "Error al abrir WhatsApp.";
-        }
-
-      }, 600);
-
-    });
-
-    render();
-
-  } catch (e) {
-
-    $("bizName").textContent = "Error";
-    $("bizNote").textContent = e.message;
-
+      render();
+    } catch (e) {
+      $("bizName").textContent = "Error";
+      $("bizNote").textContent = e.message;
+    }
   }
-}
 
-init();
-
+  init();
 })();
