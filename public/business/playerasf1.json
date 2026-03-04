@@ -1,13 +1,21 @@
 {
   "name": "F1 Shirts MX",
+
   "theme": {
     "primary": "#e10600",
     "primaryHover": "#b80500"
   },
+
   "logo": "/assets/logos/playerasf1.png",
+
   "note": "Confirmamos tu pedido por WhatsApp. Envíos a todo México.",
+
   "whatsappPhone": "524494389825",
+
   "currency": "MXN",
+
+  "checkoutMode": "shipping",
+
   "shipping": {
     "enabled": true,
     "options": [
@@ -15,6 +23,7 @@
       { "id": "nacional", "label": "Envío Nacional (3-5 días)", "cost": 159 }
     ]
   },
+
   "products": [
     {
       "id": "p1",
@@ -39,6 +48,7 @@
         }
       ]
     },
+
     {
       "id": "p2",
       "name": "Playera Ferrari Scuderia",
@@ -62,6 +72,7 @@
         }
       ]
     },
+
     {
       "id": "p3",
       "name": "Playera Mercedes AMG Petronas",

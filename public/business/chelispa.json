@@ -1,5 +1,6 @@
 {
   "name": "Chelii Spa",
+
   "theme": {
     "primary": "#6fa6b3",
     "primaryHover": "#4f8894"
@@ -47,7 +48,8 @@
       "description": "Pintura sanadora en espejo · Niño interior",
       "price": 700,
       "depositRequired": 200,
-      "image": "/assets/products/chelispa/mirada.png"
+      "image": "/assets/products/chelispa/mirada.png",
+      "variants": []
     }
   ]
 }
