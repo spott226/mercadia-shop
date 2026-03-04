@@ -82,21 +82,18 @@
 
   const getSlug = () => {
 
-  const host = window.location.hostname;
+  const host = window.location.hostname.toLowerCase();
   const parts = host.split(".");
 
-  // Si entran por subdominio (chelispa.mercadiamx.com)
+  // Caso: chelispa.mercadiamx.com
   if (parts.length > 2) {
-    return parts[0].toLowerCase();
+    return parts[0];
   }
 
-  // Si entran por ruta (mercadiamx.com/chelispa)
+  // Caso: mercadiamx.com/chelispa
   const path = location.pathname.replace(/^\/+|\/+$/g, "");
 
   if (!path) return "lunaboutiqueags";
-  if (path === "luna") return "lunaboutiqueags";
-  if (path === "f1") return "playerasf1";
-  if (path === "chelispa") return "chelispa";
 
   return path.toLowerCase();
 };
@@ -124,6 +121,24 @@ async function loadBusiness(slug) {
       );
     }
   }
+
+  function applyBusinessStyle() {
+
+  const style = state.biz?.style || "minimal";
+
+  const styles = {
+    gadgets: "bg-gadgets",
+    spa: "bg-spa",
+    racing: "bg-racing",
+    minimal: "bg-minimal",
+    luxury: "bg-luxury"
+  };
+
+  const className = styles[style] || "bg-minimal";
+
+  document.body.classList.add(className);
+
+}
 
   function renderLogo() {
     if (!state.biz.logo) return;
@@ -515,6 +530,8 @@ async function loadBusiness(slug) {
 
       state.biz = await loadBusiness(slug);
 
+      applyBusinessStyle();
+
       document.title = state.biz.name || "Mercadia";
 
       // ✅ CAMBIO MÍNIMO: si es registro, oculta campos de dirección
@@ -581,4 +598,61 @@ async function loadBusiness(slug) {
   }
 
   init();
+
+  /* =========================
+   Fondo de partículas ligero
+   ========================= */
+
+(function initParticles(){
+
+  const canvas = document.getElementById("bgParticles");
+  if(!canvas) return;
+
+  const ctx = canvas.getContext("2d");
+
+  let particles = [];
+  const COUNT = 60;
+
+  function resize(){
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+  }
+
+  window.addEventListener("resize", resize);
+  resize();
+
+  for(let i=0;i<COUNT;i++){
+    particles.push({
+      x: Math.random()*canvas.width,
+      y: Math.random()*canvas.height,
+      vx: (Math.random()-0.5)*0.4,
+      vy: (Math.random()-0.5)*0.4,
+      r: Math.random()*2+1
+    });
+  }
+
+  function draw(){
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+
+    ctx.fillStyle="rgba(255,255,255,0.5)";
+
+    particles.forEach(p=>{
+      p.x+=p.vx;
+      p.y+=p.vy;
+
+      if(p.x<0||p.x>canvas.width) p.vx*=-1;
+      if(p.y<0||p.y>canvas.height) p.vy*=-1;
+
+      ctx.beginPath();
+      ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+      ctx.fill();
+    });
+
+    requestAnimationFrame(draw);
+  }
+
+  draw();
+
+})();
+
 })();

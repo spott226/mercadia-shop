@@ -1,6 +1,8 @@
 {
   "name": "Chelii Spa",
 
+  "style": "spa",
+
   "theme": {
     "primary": "#6fa6b3",
     "primaryHover": "#4f8894"
