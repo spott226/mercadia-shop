@@ -47,11 +47,11 @@
       </div>
     </section>
 
-    <!-- DATOS DE ENTREGA -->
+    <!-- DATOS -->
     <section class="card">
-      <h2>Datos de entrega</h2>
+      <h2>Datos</h2>
 
-      <!-- Honeypot oculto (si se llena, JS bloquea el envío) -->
+      <!-- Honeypot oculto -->
       <div class="hp-field" aria-hidden="true">
         <label for="companyWebsite">Sitio web</label>
         <input
@@ -64,6 +64,7 @@
         />
       </div>
 
+      <!-- Nombre / Teléfono -->
       <div class="grid">
         <div>
           <label class="label">Nombre</label>
@@ -76,35 +77,40 @@
         </div>
       </div>
 
-      <label class="label">Calle y número</label>
-      <input id="street" class="input" type="text" placeholder="Ej. Av. Reforma 123" />
+      <!-- CAMPOS DE DIRECCIÓN (se ocultan automáticamente para cursos) -->
+      <div class="address-field">
 
-      <div class="grid">
-        <div>
-          <label class="label">Colonia</label>
-          <input id="neighborhood" class="input" type="text" />
+        <label class="label">Calle y número</label>
+        <input id="street" class="input" type="text" placeholder="Ej. Av. Reforma 123" />
+
+        <div class="grid">
+          <div>
+            <label class="label">Colonia</label>
+            <input id="neighborhood" class="input" type="text" />
+          </div>
+
+          <div>
+            <label class="label">Código Postal</label>
+            <input id="zip" class="input" type="text" maxlength="5" />
+          </div>
         </div>
 
-        <div>
-          <label class="label">Código Postal</label>
-          <input id="zip" class="input" type="text" maxlength="5" />
+        <div class="grid">
+          <div>
+            <label class="label">Ciudad</label>
+            <input id="city" class="input" type="text" />
+          </div>
+
+          <div>
+            <label class="label">Estado</label>
+            <input id="state" class="input" type="text" />
+          </div>
         </div>
+
+        <label class="label">Tipo de envío</label>
+        <select id="shippingType" class="input"></select>
+
       </div>
-
-      <div class="grid">
-        <div>
-          <label class="label">Ciudad</label>
-          <input id="city" class="input" type="text" />
-        </div>
-
-        <div>
-          <label class="label">Estado</label>
-          <input id="state" class="input" type="text" />
-        </div>
-      </div>
-
-      <label class="label">Tipo de envío</label>
-      <select id="shippingType" class="input"></select>
 
       <button id="sendBtn" class="btn" type="button">
         Enviar pedido por WhatsApp
@@ -113,7 +119,7 @@
       <p id="error" class="error"></p>
     </section>
 
-    <!-- FOOTER PROFESIONAL -->
+    <!-- FOOTER -->
     <footer class="footer">
       <p class="muted small">
         Este pedido se envía directamente al negocio vía WhatsApp.

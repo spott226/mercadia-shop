@@ -368,6 +368,7 @@
     return { subtotal, shipping, total };
   }
 
+  // ✅ CAMBIO MÍNIMO: valida distinto si es "registro"
   function validate() {
     $("error").textContent = "";
 
@@ -376,11 +377,6 @@
 
     const name = $("customerName")?.value.trim();
     const phone = $("customerPhone")?.value.trim();
-    const street = $("street")?.value.trim();
-    const neighborhood = $("neighborhood")?.value.trim();
-    const zip = $("zip")?.value.trim();
-    const city = $("city")?.value.trim();
-    const stateField = $("state")?.value.trim();
 
     const onlyLetters = /^[a-zA-ZÁÉÍÓÚáéíóúñÑ\s]+$/;
     const onlyNumbers = /^[0-9]+$/;
@@ -388,6 +384,16 @@
     if (!name || !onlyLetters.test(name)) return "Nombre inválido.";
     if (!phone || !onlyNumbers.test(phone) || phone.length !== 10)
       return "Teléfono inválido (10 dígitos).";
+
+    // Si es registro (cursos), NO pedir dirección
+    if (state.biz.checkoutMode === "registro") return null;
+
+    const street = $("street")?.value.trim();
+    const neighborhood = $("neighborhood")?.value.trim();
+    const zip = $("zip")?.value.trim();
+    const city = $("city")?.value.trim();
+    const stateField = $("state")?.value.trim();
+
     if (!street) return "Ingresa calle y número.";
     if (!neighborhood) return "Ingresa colonia.";
     if (!zip || !onlyNumbers.test(zip) || zip.length !== 5)
@@ -398,6 +404,7 @@
     return null;
   }
 
+  // ✅ CAMBIO MÍNIMO: mensaje distinto si es "registro"
   function buildMessage({ subtotal, shipping, total }) {
     const byId = new Map(state.biz.products.map((p) => [p.id, p]));
     const items = [];
@@ -411,45 +418,56 @@
       const variantsText =
         item.variants && Object.keys(item.variants).length
           ? Object.entries(item.variants)
-              .map(
-                ([k, v]) =>
-                  `${sanitizeText(k, 30)}: ${sanitizeText(v, 40)}`
-              )
+              .map(([k, v]) => `${sanitizeText(k, 30)}: ${sanitizeText(v, 40)}`)
               .join(", ")
           : "";
 
       const safeProductName = sanitizeText(p.name, 80);
 
       items.push(
-        `- ${safeProductName}${
-          variantsText ? ` (${variantsText})` : ""
-        } x${item.qty} = ${money(lineTotal)}`
+        `- ${safeProductName}${variantsText ? ` (${variantsText})` : ""} x${
+          item.qty
+        } = ${money(lineTotal)}`
       );
     }
 
     const name = sanitizeText($("customerName").value, 60);
     const phone = sanitizePhone($("customerPhone").value, 15);
+
+    const bizNameSafe = sanitizeText(state.biz.name, 80);
+
+    // Si es registro (cursos), NO meter dirección ni envío
+    if (state.biz.checkoutMode === "registro") {
+      const deposit = Number(state.biz.paymentInfo?.deposit || 0);
+
+      return [
+        `🧾 *Registro para ${bizNameSafe}*`,
+        "",
+        `👤 *Nombre:* ${name}`,
+        `📱 *Teléfono:* ${phone}`,
+        "",
+        "🎟 *Curso:*",
+        items.join("\n"),
+        "",
+        `💰 *Costo total:* ${money(total)}${
+          deposit ? `\n💳 *Apartado:* ${money(deposit)}*` : ""
+        }`
+      ].join("\n");
+    }
+
     const street = sanitizeText($("street").value, 80);
     const neighborhood = sanitizeText($("neighborhood").value, 60);
     const zip = sanitizePhone($("zip").value, 10);
     const city = sanitizeText($("city").value, 50);
     const stateField = sanitizeText($("state").value, 50);
 
-    const address = [
-      street,
-      `Col. ${neighborhood}`,
-      `CP ${zip}`,
-      city,
-      stateField
-    ]
+    const address = [street, `Col. ${neighborhood}`, `CP ${zip}`, city, stateField]
       .map((x) => sanitizeText(x, 120))
       .join(", ");
 
     const shippingSelectedRaw =
       $("shippingType")?.selectedOptions?.[0]?.textContent || "";
-
     const shippingSelected = sanitizeText(shippingSelectedRaw, 80);
-    const bizNameSafe = sanitizeText(state.biz.name, 80);
 
     return [
       `🧾 *Pedido para ${bizNameSafe}*`,
@@ -485,6 +503,24 @@
 
       document.title = state.biz.name || "Mercadia";
 
+      // ✅ CAMBIO MÍNIMO: si es registro, oculta campos de dirección
+      if (state.biz.checkoutMode === "registro") {
+        const ids = ["street", "neighborhood", "zip", "city", "state"];
+        ids.forEach((id) => {
+          const el = $(id);
+          if (!el) return;
+          // ocultar el contenedor del input (asume estructura label + input dentro de un div)
+          const wrapper = el.closest(".field") || el.closest(".form-field") || el.parentElement;
+          if (wrapper) wrapper.style.display = "none";
+        });
+
+        const ship = $("shippingType");
+        if (ship) {
+          const wrapper = ship.closest(".field") || ship.closest(".form-field") || ship.parentElement;
+          if (wrapper) wrapper.style.display = "none";
+        }
+      }
+
       $("sendBtn").addEventListener("click", () => {
         const btn = $("sendBtn");
 
@@ -518,8 +554,7 @@
             openWhatsapp(msg);
           } catch (e) {
             stopCooldown(btn);
-            $("error").textContent =
-              e.message || "Error al abrir WhatsApp.";
+            $("error").textContent = e.message || "Error al abrir WhatsApp.";
           }
         }, 600);
       });
