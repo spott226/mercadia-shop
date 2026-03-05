@@ -1,17 +1,17 @@
 {
-"name": "One Hats",
-"style": "hats",
+"name": "Shop Open",
+"style": "gadgets",
 
 "theme": {
 "primary": "#d4af37",
 "primaryHover": "#b8962e"
 },
 
-"logo": "/assets/logos/onehats.png",
+"logo": "/assets/logos/shopopen.png",
 
-"note": "Todos los sets incluyen gorra premium. Confirmamos tu pedido por WhatsApp.",
+"note": "Todos los productos incluyen envío GRATIS a todo México. Confirmamos tu pedido por WhatsApp.",
 
-"whatsappPhone": "5212461140588",
+"whatsappPhone": "5215623642257",
 
 "currency": "MXN",
 
@@ -21,88 +21,83 @@
 "enabled": true,
 "options": [
 {
-"id": "nacional",
-"label": "Envío nacional (3–5 días)",
-"cost": 160
-},
-{
-"id": "local",
-"label": "Envío Aguascalientes (24–48 hrs)",
-"cost": 80
+"id": "gratis",
+"label": "Envío GRATIS a todo México",
+"cost": 0
 }
 ]
 },
 
 "products": [
 {
-"id": "angel-rhinestone",
-"name": "Angel Rhinestone Set",
-"price": 1800,
-"image": "/assets/products/onehats/angel-rhinestone.jpg",
-"description": "Gorra negra premium con pedrería y bordado estilo street exclusivo."
+"id": "cadena-acero-oro",
+"name": "Cadena de acero inoxidable bañada en oro 24k",
+"price": 500,
+"image": "/assets/products/shopopen/cadena-acero.jpg",
+"description": "Cadena resistente de acero inoxidable con baño de oro de 24 kilates. Estilo elegante y duradero."
 },
 {
-"id": "cloud-blue",
-"name": "Cloud Blue Set",
-"price": 1800,
-"image": "/assets/products/onehats/cloud-blue.jpg",
-"description": "Gorra azul con bordado de nubes. Diseño moderno edición limitada."
+"id": "capucha-urbana",
+"name": "Capucha urbana",
+"price": 300,
+"image": "/assets/products/shopopen/capucha.jpg",
+"description": "Capucha estilo urbano ideal para outfit streetwear o clima frío."
 },
 {
-"id": "rainbow-letter",
-"name": "Rainbow Letter Set",
-"price": 1800,
-"image": "/assets/products/onehats/rainbow-letter.jpg",
-"description": "Gorra negra con letras multicolor y pedrería estilo urbano."
+"id": "reloj-anillo",
+"name": "Mini reloj de anillo elegante",
+"price": 150,
+"image": "/assets/products/shopopen/reloj-anillo.jpg",
+"description": "Mini reloj en forma de anillo. Gadget elegante y llamativo."
 },
 {
-"id": "red-star",
-"name": "Red Star Script Set",
-"price": 1800,
-"image": "/assets/products/onehats/red-star.jpg",
-"description": "Gorra negra con estrella roja bordada estilo street premium."
+"id": "spray-volumen",
+"name": "Spray para dar volumen al cabello",
+"price": 150,
+"image": "/assets/products/shopopen/spray-volumen.jpg",
+"description": "Spray especial para dar volumen y estilo al cabello."
 },
 {
-"id": "raza-d",
-"name": "Raza D Set",
-"price": 1800,
-"image": "/assets/products/onehats/raza-d.jpg",
-"description": "Gorra negra con bordado old school y pedrería decorativa."
+"id": "cadena-plata-moissanita",
+"name": "Cadena de plata 925 con moissanita",
+"price": 1750,
+"image": "/assets/products/shopopen/cadena-plata.jpg",
+"description": "Cadena premium de plata 925 con piedra moissanita de alto brillo."
 },
 {
-"id": "triple-star",
-"name": "Triple Star Set",
-"price": 1800,
-"image": "/assets/products/onehats/triple-star.jpg",
-"description": "Gorra negra con tres estrellas metálicas y acabado premium."
+"id": "pasta-blanqueadora",
+"name": "Pasta para blanquear dientes",
+"price": 150,
+"image": "/assets/products/shopopen/pasta-blanqueadora.jpg",
+"description": "Pasta especializada para ayudar a blanquear los dientes."
 },
 {
-"id": "fire-haters",
-"name": "Fire All The Haters Set",
-"price": 1800,
-"image": "/assets/products/onehats/fire-haters.jpg",
-"description": "Gorra negra con frase bordada 'For All My Haters' y detalles en pedrería."
+"id": "peluche-stitch-termico",
+"name": "Peluche de Stitch con bolsa térmica",
+"price": 411,
+"image": "/assets/products/shopopen/peluche-stitch.jpg",
+"description": "Peluche de Stitch suave y adorable que incluye bolsa térmica interior. Ideal para mantener el calor, aliviar molestias o simplemente abrazar algo cálido y cómodo."
 },
 {
-"id": "rich-forever",
-"name": "Rich Forever Set",
-"price": 1800,
-"image": "/assets/products/onehats/rich-forever.jpg",
-"description": "Gorra negra con bordado Rich Forever y detalles metálicos premium."
+"id": "peluche-capivara-relajante",
+"name": "Peluche de capivara con respiración relajante",
+"price": 300,
+"image": "/assets/products/shopopen/capivara.jpg",
+"description": "Peluche de capivara con efecto de respiración relajante que ayuda a reducir el estrés y generar sensación de calma. Perfecto para descansar, dormir mejor o relajarse."
 },
 {
-"id": "canelo",
-"name": "Canelo Undisputed Set",
-"price": 1800,
-"image": "/assets/products/onehats/canelo.jpg",
-"description": "Gorra edición especial con bordado CANELO y diseño deportivo exclusivo."
+"id": "audifonos-bluetooth-modernos",
+"name": "Audífonos Bluetooth modernos",
+"price": 150,
+"image": "/assets/products/shopopen/audifonos.jpg",
+"description": "Audífonos inalámbricos Bluetooth con diseño moderno y sonido claro. Conexión rápida con smartphone, batería recargable y estuche compacto para llevarlos a cualquier lugar."
 },
 {
-"id": "valentino-uomo",
-"name": "Valentino Uomo Set",
-"price": 1800,
-"image": "/assets/products/onehats/valentino-uomo.jpg",
-"description": "Set premium que incluye gorra exclusiva y perfume Valentino Uomo."
+"id": "drone-camara-50m",
+"name": "Drone práctico con cámara",
+"price": 549,
+"image": "/assets/products/shopopen/drone.jpg",
+"description": "Drone compacto con cámara integrada y control remoto con alcance de hasta 50 metros. Ideal para tomar fotos aéreas, videos y divertirse volando fácilmente."
 }
 ]
 }
