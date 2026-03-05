@@ -173,8 +173,7 @@ color:#f3f4f6;
 
 }
 
-
-/* fondo tipo velocidad */
+/* fondo con efecto velocidad */
 
 .theme-racing::before{
 
@@ -186,13 +185,12 @@ width:100%;
 height:100%;
 
 background:
-linear-gradient(120deg,transparent 40%,rgba(225,6,0,0.08) 50%,transparent 60%);
+linear-gradient(120deg,transparent 40%,rgba(225,6,0,0.07) 50%,transparent 60%);
 
 pointer-events:none;
 z-index:-1;
 
 }
-
 
 /* cards */
 
@@ -202,10 +200,11 @@ background:#111111;
 
 border:1px solid #1f2937;
 
+border-radius:16px;
+
 box-shadow:0 15px 40px rgba(0,0,0,.6);
 
 }
-
 
 /* productos */
 
@@ -213,16 +212,31 @@ box-shadow:0 15px 40px rgba(0,0,0,.6);
 
 border:1px solid #1f2937;
 
+border-radius:14px;
+
+transition:.25s;
+
 }
 
 .theme-racing .product:hover{
 
 border-color:#e10600;
 
-background:rgba(225,6,0,0.06);
+background:rgba(225,6,0,0.05);
+
+transform:translateY(-2px);
 
 }
 
+/* imagen producto */
+
+.theme-racing .product img{
+
+background:#0b0b0b;
+
+border-radius:10px;
+
+}
 
 /* inputs */
 
@@ -235,10 +249,20 @@ border:1px solid #1f2937;
 
 color:#f3f4f6;
 
+border-radius:10px;
+
 }
 
+.theme-racing .input:focus,
+.theme-racing .variant-select:focus{
 
-/* botón */
+border-color:#e10600;
+
+outline:none;
+
+}
+
+/* botón principal */
 
 .theme-racing .btn{
 
@@ -246,7 +270,19 @@ background:linear-gradient(135deg,#e10600,#b80500);
 
 box-shadow:0 8px 25px rgba(225,6,0,.45);
 
+border:none;
+
 }
+
+.theme-racing .btn:hover{
+
+background:linear-gradient(135deg,#ff1a12,#c10400);
+
+transform:translateY(-1px);
+
+}
+
+/* botón pequeño */
 
 .theme-racing .btn-mini{
 
@@ -257,6 +293,53 @@ border:1px solid rgba(225,6,0,.35);
 color:#ff3b30;
 
 }
+
+/* carrito item */
+
+.theme-racing .cart-item{
+
+background:#0f0f0f;
+
+border:1px solid #1f2937;
+
+border-radius:12px;
+
+}
+
+/* totales */
+
+.theme-racing .totals{
+
+background:#0f0f0f;
+
+border:1px solid #1f2937;
+
+border-radius:16px;
+
+padding:20px;
+
+box-shadow:0 10px 30px rgba(0,0,0,.6);
+
+}
+
+/* total precio */
+
+.theme-racing .total-price{
+
+color:#ff3b30;
+
+font-weight:700;
+
+}
+
+/* separadores */
+
+.theme-racing hr{
+
+border-color:#1f2937;
+
+}
+
 
 /* ===== DENTAL / MEDICAL ===== */
 
