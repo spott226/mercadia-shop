@@ -154,6 +154,109 @@ color:#805ad5;
 
 }
 
+/* ===== RACING THEME ===== */
+
+.theme-racing{
+
+--primary:#e10600;
+--primary-hover:#b80500;
+
+--bg:#0b0b0b;
+--card:#111111;
+
+--text:#f3f4f6;
+--muted:#9ca3af;
+--border:#1f2937;
+
+background:#0b0b0b;
+color:#f3f4f6;
+
+}
+
+
+/* fondo tipo velocidad */
+
+.theme-racing::before{
+
+content:"";
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+
+background:
+linear-gradient(120deg,transparent 40%,rgba(225,6,0,0.08) 50%,transparent 60%);
+
+pointer-events:none;
+z-index:-1;
+
+}
+
+
+/* cards */
+
+.theme-racing .card{
+
+background:#111111;
+
+border:1px solid #1f2937;
+
+box-shadow:0 15px 40px rgba(0,0,0,.6);
+
+}
+
+
+/* productos */
+
+.theme-racing .product{
+
+border:1px solid #1f2937;
+
+}
+
+.theme-racing .product:hover{
+
+border-color:#e10600;
+
+background:rgba(225,6,0,0.06);
+
+}
+
+
+/* inputs */
+
+.theme-racing .input,
+.theme-racing .variant-select{
+
+background:#0b0b0b;
+
+border:1px solid #1f2937;
+
+color:#f3f4f6;
+
+}
+
+
+/* botón */
+
+.theme-racing .btn{
+
+background:linear-gradient(135deg,#e10600,#b80500);
+
+box-shadow:0 8px 25px rgba(225,6,0,.45);
+
+}
+
+.theme-racing .btn-mini{
+
+background:rgba(225,6,0,.15);
+
+border:1px solid rgba(225,6,0,.35);
+
+color:#ff3b30;
+
+}
 
 /* ===== DENTAL / MEDICAL ===== */
 
