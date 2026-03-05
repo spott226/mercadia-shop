@@ -162,6 +162,13 @@ font-size:14px;
 margin-top:2px;
 }
 
+.product-description{
+font-size:13px;
+color:var(--muted);
+line-height:1.35;
+max-width:420px;
+margin-top:2px;
+}
 
 /* IMAGE */
 
