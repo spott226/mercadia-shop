@@ -267,8 +267,7 @@ async function loadBusiness(slug) {
             <div class="product-name">${p.name}</div>
             <div class="price">${money(p.price)}</div>
 
-           ${p.description ? <div class="product-description">${p.description}</div> : ""}
-           
+           ${p.description ? `<div class="product-description">${p.description}</div>` : ""}
             ${variantsHtml}
 
             <button class="add-variant btn-mini" type="button">
