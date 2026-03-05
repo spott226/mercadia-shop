@@ -1,12 +1,11 @@
 /* ======================================================
 THEMES
-Simple y optimizado para conversión
+Sistema de temas Mercadia
 ====================================================== */
 
+/* ===== DEFAULT ===== */
 
-/* ===== DEFAULT (limpio) ===== */
-
-.theme-default{
+body.theme-default{
 
 --primary:#2563eb;
 --primary-hover:#1d4ed8;
@@ -18,12 +17,14 @@ Simple y optimizado para conversión
 --muted:#6b7280;
 --border:#e5e7eb;
 
-}
+background:var(--bg);
+color:var(--text);
 
+}
 
 /* ===== GADGETS / TECH ===== */
 
-.theme-gadgets{
+body.theme-gadgets{
 
 --primary:#d4af37;
 --primary-hover:#b8962e;
@@ -35,39 +36,34 @@ Simple y optimizado para conversión
 --muted:#9ca3af;
 --border:#1f2937;
 
-}
-
-.theme-gadgets body{
 background:#0f172a;
 color:#f1f5f9;
+
 }
 
-.theme-gadgets .card{
+body.theme-gadgets .card{
 background:#111827;
 border:1px solid #1f2937;
 }
 
-.theme-gadgets .product{
+body.theme-gadgets .product{
 border:1px solid #1f2937;
 }
 
-.theme-gadgets .variant-select,
-.theme-gadgets .input{
+body.theme-gadgets .variant-select,
+body.theme-gadgets .input{
 background:#0f172a;
 border:1px solid #1f2937;
 color:#f1f5f9;
 }
 
-.theme-gadgets .totals{
+body.theme-gadgets .totals{
 background:#111827;
 }
-
 
 /* ===== SPA / BEAUTY ===== */
 
-/* SPA PREMIUM */
-
-.theme-spa{
+body.theme-spa{
 
 --primary:#9f7aea;
 --primary-hover:#805ad5;
@@ -80,13 +76,11 @@ background:#111827;
 --border:#e9d8fd;
 
 background:linear-gradient(180deg,#f6f0ff,#ffffff);
+color:#2d3748;
 
 }
 
-
-/* glow suave en fondo */
-
-.theme-spa::before{
+body.theme-spa::before{
 
 content:"";
 position:fixed;
@@ -104,13 +98,9 @@ z-index:-1;
 
 }
 
-
-/* cards glass */
-
-.theme-spa .card{
+body.theme-spa .card{
 
 background:rgba(255,255,255,0.85);
-
 backdrop-filter:blur(8px);
 
 border:1px solid #ece7ff;
@@ -119,44 +109,31 @@ box-shadow:0 20px 40px rgba(159,122,234,0.12);
 
 }
 
-
-/* hover producto */
-
-.theme-spa .product:hover{
+body.theme-spa .product:hover{
 
 border-color:#9f7aea;
-
 background:rgba(159,122,234,0.05);
 
 }
 
-
-/* botón principal */
-
-.theme-spa .btn{
+body.theme-spa .btn{
 
 background:linear-gradient(135deg,#9f7aea,#805ad5);
-
 box-shadow:0 10px 25px rgba(159,122,234,0.35);
 
 }
 
-
-/* botón agregar */
-
-.theme-spa .btn-mini{
+body.theme-spa .btn-mini{
 
 background:rgba(159,122,234,0.15);
-
 border:1px solid rgba(159,122,234,0.25);
-
 color:#805ad5;
 
 }
 
-/* ===== RACING THEME ===== */
+/* ===== RACING ===== */
 
-.theme-racing{
+body.theme-racing{
 
 --primary:#e10600;
 --primary-hover:#b80500;
@@ -173,9 +150,7 @@ color:#f3f4f6;
 
 }
 
-/* fondo con efecto velocidad */
-
-.theme-racing::before{
+body.theme-racing::before{
 
 content:"";
 position:fixed;
@@ -192,12 +167,9 @@ z-index:-1;
 
 }
 
-/* cards */
-
-.theme-racing .card{
+body.theme-racing .card{
 
 background:#111111;
-
 border:1px solid #1f2937;
 
 border-radius:16px;
@@ -206,144 +178,42 @@ box-shadow:0 15px 40px rgba(0,0,0,.6);
 
 }
 
-/* productos */
-
-.theme-racing .product{
+body.theme-racing .product{
 
 border:1px solid #1f2937;
-
 border-radius:14px;
 
 transition:.25s;
 
 }
 
-.theme-racing .product:hover{
+body.theme-racing .product:hover{
 
 border-color:#e10600;
-
 background:rgba(225,6,0,0.05);
 
 transform:translateY(-2px);
 
 }
 
-/* imagen producto */
-
-.theme-racing .product img{
-
-background:#0b0b0b;
-
-border-radius:10px;
-
-}
-
-/* inputs */
-
-.theme-racing .input,
-.theme-racing .variant-select{
-
-background:#0b0b0b;
-
-border:1px solid #1f2937;
-
-color:#f3f4f6;
-
-border-radius:10px;
-
-}
-
-.theme-racing .input:focus,
-.theme-racing .variant-select:focus{
-
-border-color:#e10600;
-
-outline:none;
-
-}
-
-/* botón principal */
-
-.theme-racing .btn{
+body.theme-racing .btn{
 
 background:linear-gradient(135deg,#e10600,#b80500);
-
 box-shadow:0 8px 25px rgba(225,6,0,.45);
 
-border:none;
-
 }
 
-.theme-racing .btn:hover{
-
-background:linear-gradient(135deg,#ff1a12,#c10400);
-
-transform:translateY(-1px);
-
-}
-
-/* botón pequeño */
-
-.theme-racing .btn-mini{
+body.theme-racing .btn-mini{
 
 background:rgba(225,6,0,.15);
-
 border:1px solid rgba(225,6,0,.35);
-
 color:#ff3b30;
 
 }
 
-/* carrito item */
+/* ===== DENTAL ===== */
 
-.theme-racing .cart-item{
-
-background:#0f0f0f;
-
-border:1px solid #1f2937;
-
-border-radius:12px;
-
-}
-
-/* totales */
-
-.theme-racing .totals{
-
-background:#0f0f0f;
-
-border:1px solid #1f2937;
-
-border-radius:16px;
-
-padding:20px;
-
-box-shadow:0 10px 30px rgba(0,0,0,.6);
-
-}
-
-/* total precio */
-
-.theme-racing .total-price{
-
-color:#ff3b30;
-
-font-weight:700;
-
-}
-
-/* separadores */
-
-.theme-racing hr{
-
-border-color:#1f2937;
-
-}
-
-
-/* ===== DENTAL / MEDICAL ===== */
-
-.theme-dental{
+body.theme-dental{
 
 --primary:#0ea5e9;
 --primary-hover:#0284c7;
@@ -355,16 +225,18 @@ border-color:#1f2937;
 --muted:#64748b;
 --border:#e2e8f0;
 
+background:#f8fafc;
+color:#0f172a;
+
 }
 
-.theme-dental .card{
+body.theme-dental .card{
 box-shadow:0 8px 20px rgba(0,0,0,0.04);
 }
 
+/* ===== STREET ===== */
 
-/* ===== STREET / MODA ===== */
-
-.theme-street{
+body.theme-street{
 
 --primary:#ef4444;
 --primary-hover:#dc2626;
@@ -376,17 +248,19 @@ box-shadow:0 8px 20px rgba(0,0,0,0.04);
 --muted:#9ca3af;
 --border:#374151;
 
+background:#111827;
+color:#f9fafb;
+
 }
 
-.theme-street .card{
+body.theme-street .card{
 background:#1f2937;
 border:1px solid #374151;
 }
 
-
 /* ===== LUXURY ===== */
 
-.theme-luxury{
+body.theme-luxury{
 
 --primary:#d4af37;
 --primary-hover:#b8962e;
@@ -398,16 +272,19 @@ border:1px solid #374151;
 --muted:#94a3b8;
 --border:#1e293b;
 
+background:#020617;
+color:#f8fafc;
+
 }
 
-.theme-luxury .card{
+body.theme-luxury .card{
 background:#0f172a;
 border:1px solid #1e293b;
 }
 
-/* ===== HATS / STREET PREMIUM ===== */
+/* ===== HATS ===== */
 
-.theme-hats{
+body.theme-hats{
 
 --primary:#d4af37;
 --primary-hover:#b8962e;
@@ -424,9 +301,7 @@ color:#f5f5f5;
 
 }
 
-/* glow dorado suave */
-
-.theme-hats::before{
+body.theme-hats::before{
 
 content:"";
 position:fixed;
@@ -444,47 +319,40 @@ z-index:-1;
 
 }
 
-/* cards */
-
-.theme-hats .card{
+body.theme-hats .card{
 
 background:#111111;
 border:1px solid #1f1f1f;
+
 border-radius:16px;
 
 box-shadow:0 20px 40px rgba(0,0,0,.6);
 
 }
 
-/* productos */
-
-.theme-hats .product{
+body.theme-hats .product{
 
 border:1px solid #1f1f1f;
 border-radius:14px;
+
 transition:.25s;
 
 }
 
-.theme-hats .product:hover{
+body.theme-hats .product:hover{
 
 border-color:#d4af37;
 background:rgba(212,175,55,0.06);
+
 transform:translateY(-2px);
 
 }
 
-/* imagen producto */
-
-.theme-hats .product-img{
-
+body.theme-hats .product-img{
 background:#0b0b0b;
-
 }
 
-/* botones */
-
-.theme-hats .btn{
+body.theme-hats .btn{
 
 background:linear-gradient(135deg,#d4af37,#b8962e);
 color:#000;
@@ -493,7 +361,7 @@ box-shadow:0 8px 25px rgba(212,175,55,.35);
 
 }
 
-.theme-hats .btn-mini{
+body.theme-hats .btn-mini{
 
 background:rgba(212,175,55,.12);
 border:1px solid rgba(212,175,55,.35);
@@ -501,15 +369,13 @@ color:#d4af37;
 
 }
 
-/* totales */
-
-.theme-hats .totals{
+body.theme-hats .totals{
 
 background:#0f0f0f;
 border:1px solid #1f1f1f;
 
 }
 
-.theme-hats .total{
+body.theme-hats .total{
 color:#d4af37;
 }
