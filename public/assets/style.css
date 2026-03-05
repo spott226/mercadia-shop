@@ -25,7 +25,9 @@ body{
 font-family:'Inter',system-ui,-apple-system,sans-serif;
 background:var(--bg);
 color:var(--text);
-min-height:100vh;
+margin:0;
+padding:0;
+min-height:auto;
 }
 
 /* LAYOUT */
@@ -33,7 +35,7 @@ min-height:100vh;
 .container{
 max-width:900px;
 margin:0 auto;
-padding:32px 20px 60px;
+padding:20px 20px 60px;
 position:relative;
 z-index:2;
 }
@@ -247,9 +249,14 @@ body.bg-legacy{
 background:#f4f6f9;
 }
 
-/* GADGETS */
+/* ======================================================
+   THEME GADGETS (CORREGIDO)
+   ====================================================== */
 
 body.bg-gadgets{
+
+/* variables del tema */
+
 --primary:#d4af37;
 --primary-hover:#b8962e;
 --text:#e5e7eb;
@@ -257,25 +264,92 @@ body.bg-gadgets{
 --card:rgba(17,24,39,.88);
 --border:#1f2937;
 
-background:radial-gradient(circle at center,#0f172a,#020617);
+/* fondo base */
+
+background:#020617;
+color:var(--text);
+
 }
 
-/* grid animation */
+/* GRID TECNOLOGICO */
 
 body.bg-gadgets::before{
 content:"";
 position:fixed;
-inset:0;
+top:0;
+left:0;
+width:100%;
+height:100%;
 background-image:
 radial-gradient(circle,rgba(255,255,255,.05) 1px,transparent 1px);
 background-size:40px 40px;
-animation:gridMove 30s linear infinite;
+animation:gridMove 35s linear infinite;
+pointer-events:none;
 z-index:-2;
 }
+
+/* PARTICULAS */
+
+body.bg-gadgets::after{
+content:"";
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background-image:
+radial-gradient(circle,#38bdf8 2px,transparent 2px),
+radial-gradient(circle,#6366f1 2px,transparent 2px),
+radial-gradient(circle,#22c55e 2px,transparent 2px);
+background-size:320px 320px;
+opacity:.35;
+animation:particlesFloat 45s linear infinite;
+pointer-events:none;
+z-index:-1;
+}
+
+/* animaciones */
 
 @keyframes gridMove{
 from{transform:translate(0,0)}
 to{transform:translate(-200px,-200px)}
+}
+
+@keyframes particlesFloat{
+from{transform:translateY(0)}
+to{transform:translateY(-600px)}
+}
+
+/* CARDS ADAPTADAS AL FONDO OSCURO */
+
+body.bg-gadgets .card{
+background:rgba(17,24,39,.82);
+backdrop-filter:blur(8px);
+border:1px solid rgba(255,255,255,.05);
+color:#e5e7eb;
+}
+
+/* PRODUCTOS */
+
+body.bg-gadgets .product{
+border:1px solid rgba(255,255,255,.05);
+}
+
+body.bg-gadgets .product:hover{
+border-color:#d4af37;
+}
+
+/* BOTONES */
+
+body.bg-gadgets .btn-mini{
+background:rgba(212,175,55,.15);
+color:#d4af37;
+border:1px solid rgba(212,175,55,.25);
+}
+
+body.bg-gadgets .btn{
+background:linear-gradient(135deg,#d4af37,#b8962e);
+color:#020617;
 }
 
 /* glass cards */
