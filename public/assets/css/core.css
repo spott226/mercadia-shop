@@ -508,3 +508,114 @@ body.theme-store .store-nav-center{
 display:flex;
 align-items:center;
 }
+
+/* ======================================================
+STORE MODE (CATALOGO TIPO ZARA)
+solo aplica cuando style = store
+====================================================== */
+
+body.theme-store .container{
+max-width:1300px;
+}
+
+/* eliminar apariencia de card */
+
+body.theme-store .card{
+background:transparent;
+border:none;
+box-shadow:none;
+padding:0;
+}
+
+/* GRID DE PRODUCTOS */
+
+body.theme-store .product-list{
+display:grid;
+grid-template-columns:repeat(auto-fill,minmax(260px,1fr));
+gap:40px;
+margin-top:40px;
+}
+
+/* CARD PRODUCTO */
+
+body.theme-store .product{
+display:flex;
+flex-direction:column;
+align-items:center;
+text-align:center;
+
+padding:0;
+
+border:none;
+
+background:transparent;
+
+transition:.3s;
+}
+
+body.theme-store .product:hover{
+transform:translateY(-6px);
+}
+
+/* imagen grande */
+
+body.theme-store .product-img{
+width:100%;
+max-width:260px;
+height:auto;
+
+border:none;
+
+margin-bottom:14px;
+}
+
+/* info producto */
+
+body.theme-store .product-left{
+flex-direction:column;
+align-items:center;
+gap:8px;
+}
+
+body.theme-store .product-info{
+align-items:center;
+text-align:center;
+}
+
+/* nombre */
+
+body.theme-store .product-name{
+font-size:15px;
+font-weight:500;
+}
+
+/* precio */
+
+body.theme-store .price{
+font-size:18px;
+font-weight:700;
+color:#111;
+}
+
+/* boton */
+
+body.theme-store .btn-mini{
+margin-top:10px;
+
+padding:10px 18px;
+
+border-radius:30px;
+
+background:#111;
+color:#fff;
+
+border:none;
+}
+
+/* totales más discretos */
+
+body.theme-store .totals{
+margin-top:60px;
+border-top:1px solid var(--border);
+padding-top:20px;
+}
