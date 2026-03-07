@@ -601,13 +601,28 @@ return { subtotal, shipping, total };
 MENU HAMBURGUESA
 ========================= */
 
-const menuToggle = document.querySelector(".menu-toggle");
+/* =========================
+MENU HAMBURGUESA
+========================= */
+
+const menuToggle = document.getElementById("menuToggle");
 const menuPanel = document.getElementById("menuPanel");
+const menuClose = document.getElementById("menuClose");
 
 if(menuToggle && menuPanel){
+
 menuToggle.addEventListener("click",()=>{
-menuPanel.classList.toggle("open");
+menuPanel.classList.add("open");
 });
+
+}
+
+if(menuClose && menuPanel){
+
+menuClose.addEventListener("click",()=>{
+menuPanel.classList.remove("open");
+});
+
 }
     } catch (e) {
       $("bizName").textContent = "Error";
