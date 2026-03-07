@@ -617,11 +617,65 @@ menuPanel.classList.toggle("open");
 
   init();
 
-  const cartBtn = document.getElementById("cartBtn");
+  /* =========================
+CARRITO MODAL
+========================= */
 
-if(cartBtn){
+const cartBtn = document.getElementById("cartBtn");
+const modal = document.getElementById("productModal");
+const modalClose = document.getElementById("modalClose");
+
+if(cartBtn && modal){
+
 cartBtn.addEventListener("click",()=>{
-document.getElementById("contacto").scrollIntoView({behavior:"smooth"});
+
+const items = Array.from(state.cart.entries());
+
+const modalVariants = document.getElementById("modalVariants");
+const modalName = document.getElementById("modalName");
+const modalPrice = document.getElementById("modalPrice");
+const modalImg = document.getElementById("modalImg");
+
+modalName.textContent = "Tu carrito";
+modalImg.style.display = "none";
+
+if(items.length === 0){
+modalVariants.innerHTML = "No hay productos en el carrito.";
+modalPrice.textContent = "";
+}else{
+
+let html = "";
+
+items.forEach(([key,item])=>{
+
+const product = state.biz.products.find(p=>p.id === item.productId);
+
+if(!product) return;
+
+html += `
+<div style="margin-bottom:10px">
+${product.name} x${item.qty}
+</div>
+`;
+
+});
+
+modalVariants.innerHTML = html;
+
+const totals = recalc();
+modalPrice.textContent = "Total: " + money(totals.total);
+
+}
+
+modal.classList.add("open");
+
+});
+
+}
+
+if(modalClose){
+modalClose.addEventListener("click",()=>{
+modal.classList.remove("open");
 });
 }
 

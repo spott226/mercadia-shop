@@ -31,22 +31,50 @@ MENÚ PREMIUM
 
 <nav class="store-nav premium-only">
 
-<div class="store-nav-left">
-<div class="menu-toggle">☰</div>
-<span id="storeLogoText"></span>
-</div>
+  <div class="store-nav-left">
 
-<div class="store-nav-center">
-<a href="#productos">Productos</a>
-<a href="#contacto">Proceder al pago</a>
-</div>
+    <button
+      id="menuToggle"
+      class="menu-toggle"
+      type="button"
+      aria-label="Abrir menú"
+    >
+      ☰
+    </button>
 
-<div class="store-nav-right">
-<button id="cartBtn" class="cart-btn">🛒 <span id="cartCount">0</span></button>
-</div>
+    <span id="storeLogoText"></span>
+
+  </div>
+
+
+  <div class="store-nav-center">
+
+    <a href="#productos">Productos</a>
+
+    <a href="#contacto">Proceder al pago</a>
+
+  </div>
+
+
+  <div class="store-nav-right">
+
+    <button
+      id="cartBtn"
+      class="cart-btn"
+      type="button"
+      aria-label="Ver carrito"
+    >
+      🛒 <span id="cartCount">0</span>
+    </button>
+
+  </div>
 
 </nav>
 
+<div id="menuPanel" class="menu-panel">
+  <a href="#productos">Productos</a>
+  <a href="#contacto">Proceder al pago</a>
+</div>
 
 <main class="container">
 
