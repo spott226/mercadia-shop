@@ -1,10 +1,10 @@
 // productos globales
 window.allProducts = [];
+window.storeWhats = "";
 
 const productsContainer = document.getElementById("products");
 const featuredContainer = document.getElementById("featured-products");
 const categoriesContainer = document.getElementById("categories");
-
 
 // detectar tienda desde subdominio
 function getStoreFromDomain(){
@@ -33,6 +33,8 @@ s.id.toLowerCase() === store
 
 // cargar nombre, logo, hero y plan
 if(storeData){
+
+window.storeWhats = storeData.whatsapp || "";
 
 document.body.classList.add("theme-" + storeData.theme);
 

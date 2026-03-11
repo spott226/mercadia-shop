@@ -144,7 +144,7 @@ let total = cart.reduce(
 
 message += `%0ATotal: $${total}`;
 
-const phone = "524491234567";
+const phone = window.storeWhats;
 
 const url = `https://wa.me/${phone}?text=${message}`;
 
