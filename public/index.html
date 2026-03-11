@@ -42,17 +42,12 @@ font-size:18px;
 /* HERO */
 
 .hero{
-
-/* fondo base mientras carga JS */
 background:#111;
-
 color:white;
 padding:80px 20px;
 text-align:center;
-
 background-size:cover;
 background-position:center;
-
 }
 
 .hero h1{
@@ -64,7 +59,7 @@ margin-bottom:10px;
 opacity:.8;
 }
 
-/* BUSCADOR TRANSLUCIDO */
+/* BUSCADOR GLASS */
 
 .search-container{
 
@@ -102,7 +97,7 @@ outline:none;
 color:#444;
 }
 
-/* CATEGORIAS HOME */
+/* CATEGORIAS */
 
 .home-categories{
 display:flex;
@@ -249,31 +244,13 @@ Comprar por WhatsApp
 
 <!-- CHATBOT -->
 
-<div id="chatbot-button" class="chatbot" onclick="toggleBot()">
+<div id="chatbot-button" class="chatbot">
 💬
 </div>
 
-<div id="chatbot-box" class="chatbot-box">
-
-<p>¿Qué buscas?</p>
-
-<button onclick="botCategoria()">Ver categorías</button>
-
-<button onclick="botComprar()">Ver productos</button>
-
-<button onclick="botWhats()">Comprar</button>
-
-</div>
+<div id="chatbot-box" class="chatbot-box"></div>
 
 <script>
-
-/* CONTROL PLAN */
-
-const PLAN_PRO = false;
-
-if(!PLAN_PRO){
-document.getElementById("chatbot-button").style.display="none";
-}
 
 /* CARRITO */
 
@@ -307,42 +284,12 @@ cart.style.display = "none";
 
 });
 
-/* BOT */
-
-function toggleBot(){
-
-const box = document.getElementById("chatbot-box");
-
-box.style.display =
-box.style.display === "block" ? "none" : "block";
-
-}
-
-function botCategoria(){
-
-document.getElementById("categories")
-.scrollIntoView({behavior:"smooth"});
-
-}
-
-function botComprar(){
-
-document.getElementById("products")
-.scrollIntoView({behavior:"smooth"});
-
-}
-
-function botWhats(){
-
-checkoutWhatsApp();
-
-}
-
 </script>
 
 <script src="js/products.js"></script>
 <script src="js/cart.js"></script>
 <script src="js/search.js"></script>
+<script src="js/chatbot.js"></script>
 
 </body>
 </html>

@@ -27,21 +27,23 @@ const res = await fetch("data/products.json");
 const data = await res.json();
 
 // buscar datos de la tienda
-const storeData = data.stores.find(s => 
+const storeData = data.stores.find(s =>
 s.id.toLowerCase() === store
 );
 
-// cargar nombre, logo y hero
+// cargar nombre, logo, hero y plan
 if(storeData){
 
 const logo = document.getElementById("store-logo");
 const name = document.getElementById("store-name");
 const hero = document.getElementById("hero");
+const bot = document.getElementById("chatbot-button");
 
 if(logo) logo.src = storeData.logo;
 
 if(name) name.textContent = storeData.name;
 
+// HERO DINAMICO
 if(hero && storeData.hero){
 
 hero.style.background = `
@@ -56,6 +58,11 @@ hero.style.backgroundSize = "cover";
 hero.style.backgroundPosition = "center";
 hero.style.backgroundRepeat = "no-repeat";
 
+}
+
+// CONTROL PLAN CHATBOT
+if(bot && storeData.plan === "basic"){
+bot.style.display = "none";
 }
 
 }
