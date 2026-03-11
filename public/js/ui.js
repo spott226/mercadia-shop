@@ -1,50 +1,68 @@
-function toggleCart() {
-  const cart = document.getElementById("cart-panel");
-  if (!cart) return;
+function toggleCart(){
 
-  if (cart.style.display === "block") {
-    cart.style.display = "none";
-  } else {
-    cart.style.display = "block";
+const cartPanel = document.getElementById("cart-panel");
 
-    if (typeof updateCartUI === "function") {
-      updateCartUI();
-    }
-  }
+if(!cartPanel) return;
+
+if(cartPanel.style.display === "block"){
+cartPanel.style.display = "none";
+}else{
+cartPanel.style.display = "block";
+
+if(typeof updateCartUI === "function"){
+updateCartUI();
 }
 
-document.addEventListener("DOMContentLoaded", function () {
-  const cartButton = document.getElementById("cart-button");
-  const closeCartButton = document.getElementById("close-cart-button");
+}
 
-  if (cartButton) {
-    cartButton.addEventListener("click", function (e) {
-      e.stopPropagation();
-      toggleCart();
-    });
-  }
+}
 
-  if (closeCartButton) {
-    closeCartButton.addEventListener("click", function (e) {
-      e.stopPropagation();
-      toggleCart();
-    });
-  }
+
+document.addEventListener("DOMContentLoaded",()=>{
+
+const cartButton = document.getElementById("cart-button");
+const closeCartButton = document.getElementById("close-cart-button");
+
+if(cartButton){
+
+cartButton.addEventListener("click",(e)=>{
+e.stopPropagation();
+toggleCart();
 });
 
-document.addEventListener("click", function (e) {
-  const cart = document.getElementById("cart-panel");
-  const cartButton = document.getElementById("cart-button");
+}
 
-  if (
-    cart &&
-    cart.style.display === "block" &&
-    !cart.contains(e.target) &&
-    cartButton &&
-    !cartButton.contains(e.target)
-  ) {
-    cart.style.display = "none";
-  }
+if(closeCartButton){
+
+closeCartButton.addEventListener("click",(e)=>{
+e.stopPropagation();
+toggleCart();
 });
+
+}
+
+});
+
+
+// cerrar carrito si se hace click fuera
+document.addEventListener("click",(e)=>{
+
+const cartPanel = document.getElementById("cart-panel");
+const cartButton = document.getElementById("cart-button");
+
+if(
+cartPanel &&
+cartPanel.style.display === "block" &&
+!cartPanel.contains(e.target) &&
+cartButton &&
+!cartButton.contains(e.target)
+){
+
+cartPanel.style.display = "none";
+
+}
+
+});
+
 
 window.toggleCart = toggleCart;

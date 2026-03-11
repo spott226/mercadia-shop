@@ -1,10 +1,13 @@
-// carrito global
+// =========================
+// CARRITO GLOBAL
+// =========================
+
 let cart = [];
 
 
-/* =========================
-   AGREGAR PRODUCTO
-========================= */
+// =========================
+// AGREGAR PRODUCTO
+// =========================
 
 function addToCart(id){
 
@@ -32,17 +35,12 @@ quantity: 1
 
 updateCartUI();
 
-// abrir carrito automáticamente
-if(typeof toggleCart === "function"){
-toggleCart();
-}
-
 }
 
 
-/* =========================
-   ACTUALIZAR UI CARRITO
-========================= */
+// =========================
+// ACTUALIZAR UI CARRITO
+// =========================
 
 function updateCartUI(){
 
@@ -62,9 +60,10 @@ cart.forEach(item => {
 total += item.price * item.quantity;
 count += item.quantity;
 
-cartItems.innerHTML += `
-<div class="cart-item">
+const div = document.createElement("div");
+div.className = "cart-item";
 
+div.innerHTML = `
 <img src="${item.image}" width="40">
 
 <div>
@@ -73,24 +72,37 @@ ${item.name}
 $${item.price} x ${item.quantity}
 </div>
 
-<button onclick="removeFromCart(${item.id})">
+<button class="remove-item" data-id="${item.id}">
 X
 </button>
-
-</div>
 `;
+
+cartItems.appendChild(div);
 
 });
 
 cartTotal.textContent = "$" + total;
 cartCount.textContent = count;
 
+
+// activar botones eliminar
+document.querySelectorAll(".remove-item").forEach(btn=>{
+
+btn.addEventListener("click",()=>{
+
+const id = parseInt(btn.dataset.id);
+removeFromCart(id);
+
+});
+
+});
+
 }
 
 
-/* =========================
-   ELIMINAR PRODUCTO
-========================= */
+// =========================
+// ELIMINAR PRODUCTO
+// =========================
 
 function removeFromCart(id){
 
@@ -101,9 +113,9 @@ updateCartUI();
 }
 
 
-/* =========================
-   CHECKOUT WHATSAPP
-========================= */
+// =========================
+// CHECKOUT WHATSAPP
+// =========================
 
 function checkoutWhatsApp(){
 
@@ -135,10 +147,11 @@ window.open(url,"_blank");
 }
 
 
-/* =========================
-   HACER FUNCIONES GLOBALES
-========================= */
+// =========================
+// HACER FUNCIONES GLOBALES
+// =========================
 
 window.addToCart = addToCart;
 window.removeFromCart = removeFromCart;
 window.checkoutWhatsApp = checkoutWhatsApp;
+window.updateCartUI = updateCartUI;
