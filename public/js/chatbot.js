@@ -1,5 +1,27 @@
 let botStep = 0
 let selectedCategory = null
+let storeWhats = ""
+
+
+// obtener whatsapp desde products.js
+document.addEventListener("DOMContentLoaded", () => {
+
+fetch("data/products.json")
+.then(res => res.json())
+.then(data => {
+
+const host = window.location.hostname
+const subdomain = host.split('.')[0].toLowerCase()
+
+const storeData = data.stores.find(s => s.id.toLowerCase() === subdomain)
+
+if(storeData){
+storeWhats = storeData.whatsapp
+}
+
+})
+
+})
 
 function toggleBot(){
 
