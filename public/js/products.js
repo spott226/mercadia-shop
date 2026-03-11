@@ -1,4 +1,7 @@
-// productos globales
+// ===============================
+// PRODUCTOS GLOBALES
+// ===============================
+
 window.allProducts = [];
 
 const productsContainer = document.getElementById("products");
@@ -6,7 +9,10 @@ const featuredContainer = document.getElementById("featured-products");
 const categoriesContainer = document.getElementById("categories");
 
 
-// detectar tienda desde subdominio
+// ===============================
+// DETECTAR TIENDA DESDE SUBDOMINIO
+// ===============================
+
 function getStoreFromDomain(){
 
 const host = window.location.hostname;
@@ -22,19 +28,29 @@ return subdomain.toLowerCase();
 
 const store = getStoreFromDomain();
 
+
+// ===============================
+// CARGAR PRODUCTOS
+// ===============================
+
 async function loadProducts(){
+
+try{
 
 const res = await fetch("data/products.json");
 const data = await res.json();
 
 
 // buscar datos de la tienda
-const storeData = data.stores.find(s =>
-s.id.toLowerCase() === store
+const storeData = data.stores.find(
+s => s.id.toLowerCase() === store
 );
 
 
-// cargar nombre, logo, hero y plan
+// ===============================
+// CONFIGURAR TIENDA
+// ===============================
+
 if(storeData){
 
 document.body.classList.add("theme-" + storeData.theme);
@@ -49,7 +65,7 @@ if(logo) logo.src = storeData.logo;
 if(name) name.textContent = storeData.name;
 
 
-// HERO DINAMICO
+// HERO DINÁMICO
 if(hero && storeData.hero){
 
 hero.style.background = `
@@ -75,27 +91,45 @@ bot.style.display = "none";
 }
 
 
-// filtrar productos por tienda
+// ===============================
+// FILTRAR PRODUCTOS DE LA TIENDA
+// ===============================
+
 const storeProducts = data.products.filter(
 p => p.store === store && p.active
 );
 
 window.allProducts = storeProducts;
 
+
+// ===============================
+// RENDERIZAR
+// ===============================
+
 generateCategories(storeProducts);
 renderFeatured(storeProducts);
 renderProducts(storeProducts);
 
+}catch(error){
+
+console.error("Error cargando productos:", error);
+
+}
+
 }
 
 
+// ===============================
+// GENERAR CATEGORÍAS
+// ===============================
 
-// generar categorias HOME
 function generateCategories(products){
+
+if(!categoriesContainer) return;
 
 const cats = [...new Set(products.map(p => p.category))];
 
-categoriesContainer.innerHTML="";
+categoriesContainer.innerHTML = "";
 
 cats.forEach(cat=>{
 
@@ -115,15 +149,17 @@ categoriesContainer.appendChild(div);
 }
 
 
+// ===============================
+// PRODUCTOS DESTACADOS
+// ===============================
 
-// productos destacados
 function renderFeatured(products){
 
 if(!featuredContainer) return;
 
 const featured = products.filter(p => p.featured);
 
-featuredContainer.innerHTML="";
+featuredContainer.innerHTML = "";
 
 featured.forEach(p=>{
 
@@ -136,7 +172,7 @@ featuredContainer.innerHTML += `
 
 <p>$${p.price}</p>
 
-<button onclick="addToCart(${p.id})">
+<button onclick="window.addToCart(${p.id})">
 Agregar al carrito
 </button>
 
@@ -147,10 +183,16 @@ Agregar al carrito
 
 }
 
-// todos los productos
+
+// ===============================
+// TODOS LOS PRODUCTOS
+// ===============================
+
 function renderProducts(products){
 
-productsContainer.innerHTML="";
+if(!productsContainer) return;
+
+productsContainer.innerHTML = "";
 
 products.forEach(p=>{
 
@@ -163,7 +205,7 @@ productsContainer.innerHTML += `
 
 <p>$${p.price}</p>
 
-<button onclick="addToCart(${p.id})">
+<button onclick="window.addToCart(${p.id})">
 Agregar al carrito
 </button>
 
@@ -174,7 +216,11 @@ Agregar al carrito
 
 }
 
-// filtrar por categoria
+
+// ===============================
+// FILTRAR POR CATEGORÍA
+// ===============================
+
 function filterCategory(cat){
 
 const filtered = window.allProducts.filter(
@@ -183,15 +229,23 @@ p => p.category === cat
 
 renderProducts(filtered);
 
-document.getElementById("products").scrollIntoView({
+const productsSection = document.getElementById("products");
+
+if(productsSection){
+
+productsSection.scrollIntoView({
 behavior:"smooth"
 });
 
 }
 
+}
 
 
-// buscador
+// ===============================
+// BUSCADOR
+// ===============================
+
 function searchProducts(){
 
 const input = document
@@ -212,6 +266,8 @@ renderProducts(filtered);
 }
 
 
+// ===============================
+// INICIAR
+// ===============================
 
-// iniciar
 loadProducts();
