@@ -1,7 +1,11 @@
 // carrito global
 let cart = [];
 
-// agregar producto
+
+/* =========================
+   AGREGAR PRODUCTO
+========================= */
+
 function addToCart(id){
 
 const product = window.allProducts.find(p => p.id === id);
@@ -28,18 +32,25 @@ quantity: 1
 
 updateCartUI();
 
-}
-
-if (typeof toggleCart === "function") {
+// abrir carrito automáticamente
+if(typeof toggleCart === "function"){
 toggleCart();
 }
 
-// actualizar carrito
+}
+
+
+/* =========================
+   ACTUALIZAR UI CARRITO
+========================= */
+
 function updateCartUI(){
 
 const cartItems = document.getElementById("cart-items");
 const cartTotal = document.getElementById("cart-total");
 const cartCount = document.getElementById("cart-count");
+
+if(!cartItems) return;
 
 cartItems.innerHTML = "";
 
@@ -76,7 +87,11 @@ cartCount.textContent = count;
 
 }
 
-// eliminar producto
+
+/* =========================
+   ELIMINAR PRODUCTO
+========================= */
+
 function removeFromCart(id){
 
 cart = cart.filter(item => item.id !== id);
@@ -85,7 +100,11 @@ updateCartUI();
 
 }
 
-// checkout WhatsApp
+
+/* =========================
+   CHECKOUT WHATSAPP
+========================= */
+
 function checkoutWhatsApp(){
 
 if(cart.length === 0){
@@ -93,7 +112,7 @@ alert("El carrito está vacío");
 return;
 }
 
-let message = "Hola quiero comprar:%0A";
+let message = "Hola quiero comprar:%0A%0A";
 
 cart.forEach(item => {
 
@@ -114,6 +133,11 @@ const url = `https://wa.me/${phone}?text=${message}`;
 window.open(url,"_blank");
 
 }
+
+
+/* =========================
+   HACER FUNCIONES GLOBALES
+========================= */
 
 window.addToCart = addToCart;
 window.removeFromCart = removeFromCart;
