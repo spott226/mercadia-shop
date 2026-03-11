@@ -6,7 +6,20 @@ const featuredContainer = document.getElementById("featured-products");
 const categoriesContainer = document.getElementById("categories");
 
 // tienda fija para pruebas
-const store = "shopopen";
+function getStoreFromDomain(){
+
+const host = window.location.hostname;
+
+// ejemplo:
+// hernandez-snickers.mercadiamx.com
+
+const subdomain = host.split('.')[0];
+
+return subdomain.toLowerCase();
+
+}
+
+const store = getStoreFromDomain();
 
 async function loadProducts(){
 
