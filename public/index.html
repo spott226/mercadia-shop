@@ -1,325 +1,270 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="es">
 
 <head>
 
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Mercadia</title>
+<title>Tienda</title>
 
-<meta name="description" content="Pedido en línea vía WhatsApp">
+<link rel="stylesheet" href="assets/css/core.css">
+<link rel="stylesheet" href="assets/css/themes.css">
 
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
 
-<link rel="stylesheet" href="/assets/css/core.css">
-<link rel="stylesheet" href="/assets/css/themes.css">
+/* HERO */
+
+.hero{
+background:#111;
+color:white;
+padding:80px 20px;
+text-align:center;
+}
+
+.hero h1{
+font-size:36px;
+margin-bottom:10px;
+}
+
+.hero p{
+opacity:.8;
+}
+
+/* CATEGORIAS HOME */
+
+.home-categories{
+display:flex;
+gap:20px;
+flex-wrap:wrap;
+justify-content:center;
+padding:40px 20px;
+}
+
+.category-card{
+background:white;
+padding:30px;
+border-radius:10px;
+box-shadow:0 4px 10px rgba(0,0,0,.05);
+cursor:pointer;
+min-width:160px;
+text-align:center;
+}
+
+/* DESTACADOS */
+
+.featured{
+padding:40px 20px;
+}
+
+.featured h2{
+text-align:center;
+margin-bottom:20px;
+}
+
+/* RESPONSIVE */
+
+@media(max-width:768px){
+
+.hero h1{
+font-size:28px;
+}
+
+.products-grid{
+grid-template-columns:1fr 1fr;
+}
+
+}
+
+</style>
 
 </head>
 
-
 <body>
 
-<!-- Fondo animado -->
-<canvas id="bgParticles"></canvas>
+<header>
 
-
-<!-- =========================
-MENÚ PREMIUM
-(se activa cuando style = store)
-========================= -->
-
-<nav class="store-nav premium-only">
-
-  <div class="store-nav-left">
-
-    <button
-      id="menuToggle"
-      class="menu-toggle"
-      type="button"
-      aria-label="Abrir menú"
-    >
-      ☰
-    </button>
-
-    <span id="storeLogoText"></span>
-
-  </div>
-
-
-<div class="store-nav-center"></div>
-
-
-  <div class="store-nav-right">
-
-    <button
-      id="cartBtn"
-      class="cart-btn"
-      type="button"
-      aria-label="Ver carrito"
-    >
-      🛒 <span id="cartCount">0</span>
-    </button>
-
-  </div>
-
-</nav>
-
-<div id="menuPanel" class="menu-panel">
-
-<button id="menuClose" class="menu-close">✕</button>
-
-<a href="#productos">Productos</a>
-<a href="#contacto">Proceder al pago</a>
-
+<div class="logo" id="store-name">
+Tienda
 </div>
 
-<main class="container">
-
-
-<!-- =========================
-HEADER
-========================= -->
-
-<header class="header">
-
-<div id="logoContainer"></div>
-
-<h1 id="bizName">Cargando…</h1>
-
-<p id="bizNote" class="muted"></p>
+<div class="cart-icon" onclick="toggleCart()">
+🛒 (<span id="cart-count">0</span>)
+</div>
 
 </header>
 
+<!-- HERO -->
 
+<section class="hero">
 
-<!-- =========================
-PRODUCTOS
-========================= -->
+<h1>Bienvenido</h1>
 
-<section class="card" id="productos">
+<p>Explora nuestros productos</p>
 
-<h2>Selecciona tus productos</h2>
+<div class="search-container">
 
-<div id="productList" class="product-list"></div>
-
-
-<div class="totals">
-
-<div class="line">
-<span>Subtotal</span>
-<span id="subtotal">$0</span>
-</div>
-
-<div class="line">
-<span>Envío</span>
-<span id="shipping">$0</span>
-</div>
-
-<div class="line total">
-<span>Total</span>
-<span id="total">$0</span>
-</div>
+<input
+type="text"
+id="search-input"
+placeholder="Buscar productos..."
+onkeyup="searchProducts()"
+/>
 
 </div>
 
 </section>
 
+<!-- CATEGORIAS HOME -->
 
+<section class="home-categories" id="categories"></section>
 
-<!-- =========================
-DATOS CLIENTE
-========================= -->
+<!-- DESTACADOS -->
 
-<section class="card" id="contacto">
+<section class="featured">
 
-<h2>Datos de contacto</h2>
+<h2>Productos Destacados</h2>
 
+<div class="products-grid" id="featured-products"></div>
 
-<!-- honeypot -->
+</section>
 
-<div class="hp-field">
+<!-- PRODUCTOS -->
 
-<label for="companyWebsite">Sitio web</label>
+<section>
 
-<input
-id="companyWebsite"
-name="companyWebsite"
-type="text"
-tabindex="-1"
-autocomplete="off"
-/>
+<h2 style="text-align:center;margin-top:20px;">Todos los productos</h2>
 
-</div>
+<div class="products-grid" id="products"></div>
 
+</section>
 
+<!-- CARRITO -->
 
-<div class="grid">
+<div class="cart-panel" id="cart-panel">
 
-<div>
+<div style="display:flex;justify-content:space-between;align-items:center">
 
-<label class="label">Nombre</label>
+<h2>Carrito</h2>
 
-<input
-id="customerName"
-class="input"
-type="text"
-placeholder="Nombre completo"
-/>
-
-</div>
-
-
-<div>
-
-<label class="label">Teléfono</label>
-
-<input
-id="customerPhone"
-class="input"
-type="tel"
-placeholder="10 dígitos"
-maxlength="10"
-/>
-
-</div>
-
-</div>
-
-
-
-<!-- =========================
-DIRECCIÓN
-========================= -->
-
-<div class="address-field">
-
-<label class="label">Calle y número</label>
-
-<input
-id="street"
-class="input"
-type="text"
-/>
-
-
-<div class="grid">
-
-<div>
-
-<label class="label">Colonia</label>
-
-<input
-id="neighborhood"
-class="input"
-type="text"
-/>
-
-</div>
-
-<div>
-
-<label class="label">Código Postal</label>
-
-<input
-id="zip"
-class="input"
-type="text"
-maxlength="5"
-/>
-
-</div>
-
-</div>
-
-
-<div class="grid">
-
-<div>
-
-<label class="label">Ciudad</label>
-
-<input
-id="city"
-class="input"
-type="text"
-/>
-
-</div>
-
-<div>
-
-<label class="label">Estado</label>
-
-<input
-id="state"
-class="input"
-type="text"
-/>
-
-</div>
-
-</div>
-
-
-<label class="label">Tipo de envío</label>
-
-<select id="shippingType" class="input"></select>
-
-</div>
-
-
-
-<button id="sendBtn" class="btn" type="button">
-Enviar pedido por WhatsApp
+<button onclick="toggleCart()" style="
+background:none;
+border:none;
+font-size:22px;
+cursor:pointer;
+">
+✕
 </button>
 
-<p id="error" class="error"></p>
+</div>
 
-</section>
+<div id="cart-items"></div>
 
+<h3>Total: <span id="cart-total">$0</span></h3>
 
-
-<!-- =========================
-FOOTER
-========================= -->
-
-<footer class="footer">
-
-<p class="muted small">
-Este pedido se envía directamente al negocio vía WhatsApp.
-</p>
-
-<p class="muted small" id="bizFooter"></p>
-
-</footer>
-
-
-</main>
-
-<!-- =========================
-MODAL PRODUCTO
-========================= -->
-
-<div id="productModal" class="modal">
-
-  <div class="modal-box">
-
-    <button id="modalClose" class="modal-close">✕</button>
-
-    <img id="modalImg" class="modal-img">
-
-    <h2 id="modalName"></h2>
-
-    <p id="modalPrice"></p>
-
-    <div id="modalVariants"></div>
-
-  </div>
+<button onclick="checkoutWhatsApp()">
+Comprar por WhatsApp
+</button>
 
 </div>
 
-<script src="/assets/app.js"></script>
+<!-- CHATBOT -->
+
+<div id="chatbot-button" class="chatbot" onclick="toggleBot()">
+💬
+</div>
+
+<div id="chatbot-box" class="chatbot-box">
+
+<p>¿Qué buscas?</p>
+
+<button onclick="botCategoria()">Ver categorías</button>
+
+<button onclick="botComprar()">Ver productos</button>
+
+<button onclick="botWhats()">Comprar</button>
+
+</div>
+
+<script>
+
+/* CONTROL PLAN */
+
+const PLAN_PRO = false;
+
+if(!PLAN_PRO){
+document.getElementById("chatbot-button").style.display="none";
+}
+
+/* CARRITO */
+
+function toggleCart() {
+
+const cart = document.getElementById("cart-panel");
+
+if (cart.style.display === "block") {
+cart.style.display = "none";
+} else {
+cart.style.display = "block";
+renderCart();
+}
+
+}
+
+
+/* cerrar carrito al hacer click fuera */
+
+document.addEventListener("click", function(e){
+
+const cart = document.getElementById("cart-panel");
+const cartButton = document.querySelector('[onclick="toggleCart()"]');
+
+if(
+cart.style.display === "block" &&
+!cart.contains(e.target) &&
+!cartButton.contains(e.target)
+){
+cart.style.display = "none";
+}
+
+});
+/* BOT */
+
+function toggleBot(){
+
+const box = document.getElementById("chatbot-box");
+
+box.style.display =
+box.style.display === "block" ? "none" : "block";
+
+}
+
+function botCategoria(){
+
+document.getElementById("categories")
+.scrollIntoView({behavior:"smooth"});
+
+}
+
+function botComprar(){
+
+document.getElementById("products")
+.scrollIntoView({behavior:"smooth"});
+
+}
+
+function botWhats(){
+
+checkoutWhatsApp();
+
+}
+
+</script>
+
+<script src="js/products.js"></script>
+<script src="js/cart.js"></script>
+<script src="js/search.js"></script>
 
 </body>
+
 </html>

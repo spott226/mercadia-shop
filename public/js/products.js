@@ -1,0 +1,142 @@
+// productos globales
+window.allProducts = [];
+
+const productsContainer = document.getElementById("products");
+const featuredContainer = document.getElementById("featured-products");
+const categoriesContainer = document.getElementById("categories");
+
+// tienda fija para pruebas
+const store = "shopopen";
+
+async function loadProducts(){
+
+const res = await fetch("data/products.json");
+const data = await res.json();
+
+const storeProducts = data.products.filter(
+p => p.store === store && p.active
+);
+
+window.allProducts = storeProducts;
+
+generateCategories(storeProducts);
+renderFeatured(storeProducts);
+renderProducts(storeProducts);
+
+}
+
+// generar categorias HOME
+function generateCategories(products){
+
+const cats = [...new Set(products.map(p => p.category))];
+
+categoriesContainer.innerHTML="";
+
+cats.forEach(cat=>{
+
+categoriesContainer.innerHTML += `
+<div class="category-card" onclick="filterCategory('${cat}')">
+
+<h3>${cat}</h3>
+
+</div>
+`;
+
+});
+
+}
+
+// productos destacados
+function renderFeatured(products){
+
+if(!featuredContainer) return;
+
+const featured = products.filter(p => p.featured);
+
+featuredContainer.innerHTML="";
+
+featured.forEach(p=>{
+
+featuredContainer.innerHTML += `
+<div class="product-card">
+
+<img src="${p.image}" alt="${p.name}">
+
+<h3>${p.name}</h3>
+
+<p>$${p.price}</p>
+
+<button onclick="addToCart(${p.id})">
+Agregar al carrito
+</button>
+
+</div>
+`;
+
+});
+
+}
+
+// todos los productos
+function renderProducts(products){
+
+productsContainer.innerHTML="";
+
+products.forEach(p=>{
+
+productsContainer.innerHTML += `
+<div class="product-card">
+
+<img src="${p.image}" alt="${p.name}">
+
+<h3>${p.name}</h3>
+
+<p>$${p.price}</p>
+
+<button onclick="addToCart(${p.id})">
+Agregar al carrito
+</button>
+
+</div>
+`;
+
+});
+
+}
+
+// filtrar por categoria
+function filterCategory(cat){
+
+const filtered = window.allProducts.filter(
+p => p.category === cat
+);
+
+renderProducts(filtered);
+
+document.getElementById("products").scrollIntoView({
+behavior:"smooth"
+});
+
+}
+
+// buscador
+function searchProducts(){
+
+const input = document
+.getElementById("search-input")
+.value
+.toLowerCase();
+
+const filtered = window.allProducts.filter(product =>
+
+product.name.toLowerCase().includes(input) ||
+product.description.toLowerCase().includes(input) ||
+product.category.toLowerCase().includes(input)
+
+);
+
+renderProducts(filtered);
+
+}
+
+loadProducts();
