@@ -31,14 +31,33 @@ const storeData = data.stores.find(s =>
 s.id.toLowerCase() === store
 );
 
-// cargar nombre y logo
+// cargar nombre, logo y hero
 if(storeData){
 
 const logo = document.getElementById("store-logo");
 const name = document.getElementById("store-name");
+const hero = document.getElementById("hero");
 
 if(logo) logo.src = storeData.logo;
+
 if(name) name.textContent = storeData.name;
+
+// fondo dinámico por tienda
+if(hero && storeData.hero){
+
+hero.style.background = `
+linear-gradient(
+rgba(0,0,0,0.55),
+rgba(0,0,0,0.55)
+),
+url(${storeData.hero})
+`;
+
+hero.style.backgroundSize = "cover";
+hero.style.backgroundPosition = "center";
+hero.style.backgroundRepeat = "no-repeat";
+
+}
 
 }
 
