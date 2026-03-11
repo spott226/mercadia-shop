@@ -23,14 +23,13 @@ TEMA STREETWEAR / SNEAKERS
 /* -------------------------------
 TEMA SPA / BELLEZA
 -------------------------------- */
-
 .theme-spa{
 
---primary:#ec4899;
---background:#fff1f2;
---card:#ffffff;
---text:#831843;
---accent:#f472b6;
+--primary:#8b6f5a;        /* café suave elegante */
+--background:#f7f3ef;     /* crema */
+--card:#ffffff;           /* tarjetas limpias */
+--text:#3a2e27;           /* texto café oscuro */
+--accent:#cbb8a8;         /* beige elegante */
 
 }
 
