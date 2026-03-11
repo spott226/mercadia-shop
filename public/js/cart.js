@@ -30,6 +30,10 @@ updateCartUI();
 
 }
 
+if (typeof toggleCart === "function") {
+toggleCart();
+}
+
 // actualizar carrito
 function updateCartUI(){
 
