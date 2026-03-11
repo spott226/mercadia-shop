@@ -136,7 +136,7 @@ featuredContainer.innerHTML += `
 
 <p>$${p.price}</p>
 
-<button class="add-cart" data-id="${p.id}">
+<button onclick="addToCart(${p.id})">
 Agregar al carrito
 </button>
 
@@ -145,11 +145,7 @@ Agregar al carrito
 
 });
 
-activateCartButtons();
-
 }
-
-
 
 // todos los productos
 function renderProducts(products){
