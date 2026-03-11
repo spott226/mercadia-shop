@@ -1,17 +1,5 @@
 let productCount = 0
 
-
-function slug(text){
-
-return text
-.toLowerCase()
-.replace(/\s+/g,"")
-.replace(/[^a-z0-9]/g,"")
-
-}
-
-
-
 function addProduct(){
 
 productCount++
@@ -19,7 +7,6 @@ productCount++
 const container = document.getElementById("products")
 
 const div = document.createElement("div")
-
 div.className = "product"
 
 div.innerHTML = `
@@ -47,11 +34,6 @@ div.innerHTML = `
 
 <textarea class="description" placeholder="Descripción"></textarea>
 
-<label>
-<input type="checkbox" class="featured">
-Producto destacado
-</label>
-
 `
 
 container.appendChild(div)
@@ -62,40 +44,13 @@ container.appendChild(div)
 
 function sendJSON(){
 
-const storeName = document.getElementById("store_name").value
-
-const storeSlug = slug(storeName)
-
-const logoInput = document.getElementById("store_logo")
-
-const logoFile = logoInput.files[0]
-
-
-const store = {
-
-id: storeSlug,
-name: storeName,
-whatsapp: document.getElementById("store_whatsapp").value,
-currency:"MXN",
-logo: logoFile ? "/assets/logos/"+logoFile.name : "",
-active:true
-
-}
-
-
-
 const products = []
-
 
 document.querySelectorAll(".product").forEach((p,i)=>{
 
 const imageFile = p.querySelector(".image").files[0]
 
 products.push({
-
-id: Date.now()+i,
-
-store: storeSlug,
 
 name: p.querySelector(".name").value,
 
@@ -105,39 +60,24 @@ category: p.querySelector(".category").value,
 
 stock: Number(p.querySelector(".stock").value),
 
-image: imageFile ? "/assets/products/"+storeSlug+"/"+imageFile.name : "",
+image: imageFile ? "/assets/products/shopopen/" + imageFile.name : "",
 
 description: p.querySelector(".description").value,
 
-featured: p.querySelector(".featured").checked,
+featured: true,
 
-active:true
-
-})
+active: true
 
 })
 
+})
 
+const json = JSON.stringify(products,null,2)
 
-const data = {
-
-stores:[store],
-products:products
-
-}
-
-
-
-const json = JSON.stringify(data,null,2)
-
-
-
-const numeroAdmin = "524494389825"
+const numeroAdmin = "524491234567"
 
 const mensaje = encodeURIComponent(json)
 
-
-
-window.open(`https://wa.me/${numeroAdmin}?text=${mensaje}`)
+window.location.href = `https://wa.me/${numeroAdmin}?text=${mensaje}`
 
 }

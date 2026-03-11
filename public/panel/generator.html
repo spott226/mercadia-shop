@@ -1,8 +1,11 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>Panel de productos</title>
 
 <style>
@@ -82,21 +85,7 @@ margin-bottom:20px;
 
 <div class="container">
 
-<h1>Panel de Tienda</h1>
-
-<div class="card">
-
-<h2>Datos de la tienda</h2>
-
-<input id="store_name" placeholder="Nombre de la tienda">
-
-<input id="store_whatsapp" placeholder="WhatsApp del negocio">
-
-<label>Logo</label>
-<input type="file" id="store_logo">
-
-</div>
-
+<h1>Panel de Productos</h1>
 
 <div class="card">
 
@@ -113,29 +102,27 @@ margin-bottom:20px;
 </div>
 
 
+
 <script>
 
 let productCount = 0
 
-function slug(text){
-return text.toLowerCase().replace(/\s+/g,'')
-}
 
 function addProduct(){
 
 productCount++
 
-const container=document.getElementById("products")
+const container = document.getElementById("products")
 
-const div=document.createElement("div")
+const div = document.createElement("div")
 
-div.className="product"
+div.className = "product"
 
-div.innerHTML=`
+div.innerHTML = `
 
 <h3>Producto ${productCount}</h3>
 
-<input class="name" placeholder="Nombre del producto">
+<input class="name" placeholder="Nombre producto">
 
 <input class="price" type="number" placeholder="Precio">
 
@@ -156,11 +143,6 @@ div.innerHTML=`
 
 <textarea class="description" placeholder="Descripción"></textarea>
 
-<label>
-<input type="checkbox" class="featured">
-Producto destacado
-</label>
-
 `
 
 container.appendChild(div)
@@ -168,70 +150,44 @@ container.appendChild(div)
 }
 
 
+
 function sendJSON(){
 
-const storeName=document.getElementById("store_name").value
-const storeSlug=slug(storeName)
-
-const logoFile=document.getElementById("store_logo").files[0]
-
-const store={
-
-id:storeSlug,
-name:storeName,
-whatsapp:document.getElementById("store_whatsapp").value,
-currency:"MXN",
-logo:logoFile?"/assets/logos/"+logoFile.name:"",
-active:true
-
-}
-
-const products=[]
+const products = []
 
 document.querySelectorAll(".product").forEach((p,i)=>{
 
-const imageFile=p.querySelector(".image").files[0]
+const imageFile = p.querySelector(".image").files[0]
 
 products.push({
 
-id:Date.now()+i,
+name: p.querySelector(".name").value,
 
-store:storeSlug,
+price: Number(p.querySelector(".price").value),
 
-name:p.querySelector(".name").value,
+category: p.querySelector(".category").value,
 
-price:Number(p.querySelector(".price").value),
+stock: Number(p.querySelector(".stock").value),
 
-category:p.querySelector(".category").value,
+image: imageFile ? imageFile.name : "",
 
-stock:Number(p.querySelector(".stock").value),
+description: p.querySelector(".description").value,
 
-image:imageFile?"/assets/products/"+storeSlug+"/"+imageFile.name:"",
+featured: true,
 
-description:p.querySelector(".description").value,
-
-featured:p.querySelector(".featured").checked,
-
-active:true
+active: true
 
 })
 
 })
 
-const data={
+const json = JSON.stringify(products,null,2)
 
-stores:[store],
-products:products
+const numeroAdmin = "524491234567"
 
-}
+const mensaje = encodeURIComponent(json)
 
-const json=JSON.stringify(data,null,2)
-
-const numeroAdmin="524491234567"
-
-const mensaje=encodeURIComponent(json)
-
-window.open(`https://wa.me/${numeroAdmin}?text=${mensaje}`)
+window.location.href = `https://wa.me/${numeroAdmin}?text=${mensaje}`
 
 }
 
