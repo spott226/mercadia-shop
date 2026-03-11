@@ -163,7 +163,7 @@ productsContainer.innerHTML += `
 
 <p>$${p.price}</p>
 
-<button class="add-cart" data-id="${p.id}">
+<button onclick="addToCart(${p.id})">
 Agregar al carrito
 </button>
 
@@ -172,11 +172,7 @@ Agregar al carrito
 
 });
 
-activateCartButtons();
-
 }
-
-
 
 // activar botones del carrito
 function activateCartButtons(){
