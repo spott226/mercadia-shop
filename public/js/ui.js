@@ -1,73 +1,50 @@
-// UI CONTROLS
+function toggleCart() {
+  const cart = document.getElementById("cart-panel");
+  if (!cart) return;
 
-document.addEventListener("DOMContentLoaded", () => {
+  if (cart.style.display === "block") {
+    cart.style.display = "none";
+  } else {
+    cart.style.display = "block";
 
-const cartButton = document.getElementById("cart-button");
-const closeCartButton = document.getElementById("close-cart-button");
-const cartPanel = document.getElementById("cart-panel");
-
-const chatbotButton = document.getElementById("chatbot-button");
-const chatbotBox = document.getElementById("chatbot-box");
-
-
-// ABRIR / CERRAR CARRITO
-if(cartButton){
-
-cartButton.addEventListener("click",(e)=>{
-e.stopPropagation();
-
-if(cartPanel.style.display === "block"){
-cartPanel.style.display = "none";
-}else{
-cartPanel.style.display = "block";
+    if (typeof updateCartUI === "function") {
+      updateCartUI();
+    }
+  }
 }
 
+document.addEventListener("DOMContentLoaded", function () {
+  const cartButton = document.getElementById("cart-button");
+  const closeCartButton = document.getElementById("close-cart-button");
+
+  if (cartButton) {
+    cartButton.addEventListener("click", function (e) {
+      e.stopPropagation();
+      toggleCart();
+    });
+  }
+
+  if (closeCartButton) {
+    closeCartButton.addEventListener("click", function (e) {
+      e.stopPropagation();
+      toggleCart();
+    });
+  }
 });
 
-}
+document.addEventListener("click", function (e) {
+  const cart = document.getElementById("cart-panel");
+  const cartButton = document.getElementById("cart-button");
 
-
-// BOTON CERRAR CARRITO
-if(closeCartButton){
-
-closeCartButton.addEventListener("click",(e)=>{
-e.stopPropagation();
-cartPanel.style.display = "none";
+  if (
+    cart &&
+    cart.style.display === "block" &&
+    !cart.contains(e.target) &&
+    cartButton &&
+    !cartButton.contains(e.target)
+  ) {
+    cart.style.display = "none";
+  }
 });
 
-}
-
-
-// CERRAR CARRITO AL HACER CLICK FUERA
-document.addEventListener("click",(e)=>{
-
-if(
-cartPanel &&
-cartPanel.style.display === "block" &&
-!cartPanel.contains(e.target) &&
-!cartButton.contains(e.target)
-){
-cartPanel.style.display = "none";
-}
-
-});
-
-
-
-// CHATBOT
-if(chatbotButton){
-
-chatbotButton.addEventListener("click",(e)=>{
-e.stopPropagation();
-
-if(chatbotBox.style.display === "block"){
-chatbotBox.style.display = "none";
-}else{
-chatbotBox.style.display = "block";
-}
-
-});
-
-}
-
-});
+window.toggleCart = toggleCart;
