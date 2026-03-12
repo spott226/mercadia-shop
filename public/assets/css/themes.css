@@ -5,71 +5,86 @@ document.body.classList.add("theme-xxx")
 ================================ */
 
 
-/* --------------------------------
-TEMA STREETWEAR / SNEAKERS
-Estilo tipo StockX / Nike / Urban
--------------------------------- */
+/* ===============================
+TEMA LUXURY / PREMIUM
+Ideal para marcas buchonas, lujo,
+joyería, sneakers premium
+================================ */
 
-.theme-urban{
+.theme-luxury{
 
---primary:#22c55e;      /* verde sneaker */
---background:#020617;   /* fondo oscuro profundo */
---card:#0f172a;         /* tarjetas dark */
---text:#f8fafc;         /* texto blanco fuerte */
---accent:#38bdf8;       /* azul moderno */
+--primary:#c8a96a;        /* dorado */
+--background:#0b0b0b;     /* negro profundo */
+--card:#161616;           /* gris oscuro */
+--text:#f2f2f2;           /* blanco suave */
+--accent:#e6c88c;         /* dorado claro */
 
 }
 
-/* tarjetas productos */
+.theme-luxury .product-card{
+background:#161616;
+border:1px solid rgba(200,169,106,.25);
+color:#f2f2f2;
+}
 
-.theme-urban .product-card{
+.theme-luxury .category-card{
+background:#161616;
+border:1px solid rgba(200,169,106,.25);
+color:#e6c88c;
+}
 
-background:#0f172a;
-color:#f8fafc;
+.theme-luxury .category-card:hover{
+border-color:#e6c88c;
+color:#e6c88c;
+}
+
+.theme-luxury #search-input{
+background:#121212;
+color:#fff;
+border:1px solid rgba(200,169,106,.25);
+}
+
+.theme-luxury .chatbot-box{
+background:#161616;
+color:#fff;
+}
+
+
+/* ===============================
+TEMA STREET / SNEAKERS
+urbano pero neutro
+================================ */
+
+.theme-street{
+
+--primary:#111111;
+--background:#0f172a;
+--card:#1e293b;
+--text:#f8fafc;
+--accent:#94a3b8;
+
+}
+
+.theme-street .product-card{
+background:#1e293b;
 border:1px solid rgba(255,255,255,.05);
-
 }
 
-/* categorias */
-
-.theme-urban .category-card{
-
-background:#111827;
+.theme-street .category-card{
+background:#1e293b;
 color:#f8fafc;
 border:1px solid rgba(255,255,255,.08);
-
 }
 
-.theme-urban .category-card:hover{
-
-border-color:#22c55e;
-color:#22c55e;
-
-}
-
-/* buscador */
-
-.theme-urban #search-input{
-
-background:#111827;
-color:#f8fafc;
-border:1px solid rgba(255,255,255,.1);
-
-}
-
-/* chatbot */
-
-.theme-urban .chatbot-box{
-
-background:#0f172a;
-color:#f8fafc;
-
+.theme-street .category-card:hover{
+border-color:#94a3b8;
+color:#94a3b8;
 }
 
 
-/* --------------------------------
+/* ===============================
 TEMA SPA / BELLEZA
--------------------------------- */
+================================ */
 
 .theme-spa{
 
@@ -81,57 +96,47 @@ TEMA SPA / BELLEZA
 
 }
 
-/* categorias */
-
 .theme-spa .category-card{
-
 background:#ffffff;
 border:1px solid rgba(0,0,0,.08);
 color:#3a2e27;
-
 }
 
 .theme-spa .category-card:hover{
-
 border-color:#8b6f5a;
 color:#8b6f5a;
-
 }
 
 
-/* --------------------------------
-TEMA PERFUMERIA
--------------------------------- */
+/* ===============================
+TEMA MODERNO / GRIS PREMIUM
+================================ */
 
-.theme-perfume{
+.theme-modern{
 
---primary:#7c3aed;
---background:#1e1b4b;
---card:#312e81;
---text:#f5f3ff;
---accent:#a78bfa;
-
-}
-
-.theme-perfume .category-card{
-
-background:#312e81;
-color:#f5f3ff;
-border:1px solid rgba(255,255,255,.1);
+--primary:#374151;
+--background:#f3f4f6;
+--card:#ffffff;
+--text:#111827;
+--accent:#6b7280;
 
 }
 
-.theme-perfume .category-card:hover{
+.theme-modern .category-card{
+background:#ffffff;
+border:1px solid rgba(0,0,0,.08);
+color:#111827;
+}
 
-border-color:#a78bfa;
-color:#a78bfa;
-
+.theme-modern .category-card:hover{
+border-color:#374151;
+color:#374151;
 }
 
 
-/* --------------------------------
-TEMA MINIMAL / GENERAL
--------------------------------- */
+/* ===============================
+TEMA MINIMAL
+================================ */
 
 .theme-minimal{
 
@@ -144,28 +149,22 @@ TEMA MINIMAL / GENERAL
 }
 
 .theme-minimal .category-card{
-
 background:#f9fafb;
 border:1px solid rgba(0,0,0,.08);
 color:#111827;
-
 }
 
 .theme-minimal .category-card:hover{
-
 border-color:#111827;
 color:#111827;
-
 }
 
 
-
 /* ===============================
-ELEMENTOS UI (globales)
+ELEMENTOS UI GLOBAL
 ================================ */
 
 button{
-
 background:var(--primary);
 color:white;
 padding:10px 14px;
@@ -173,11 +172,8 @@ border:none;
 cursor:pointer;
 border-radius:6px;
 font-weight:600;
-
 }
 
 button:hover{
-
 opacity:.9;
-
 }
