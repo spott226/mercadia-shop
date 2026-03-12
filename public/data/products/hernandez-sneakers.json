@@ -23,7 +23,6 @@
 
     {"id":19,"store":"hernandez-sneakers","name":"Playera Armani Exchange","price":150,"category":"armani","image":"/assets/products/hdz-sneakers/armani1.jpeg","description":"Playera Armani Exchange casual moderna.","featured":false,"active":true},
 
-    {"id":21,"store":"hernandez-sneakers","name":"Tenis Balenciaga Urban","price":1250,"category":"balenciaga","image":"/assets/products/hdz-sneakers/balenciaga2.jpeg","description":"Modelo Balenciaga moderno.","featured":false,"active":true},
     {"id":22,"store":"hernandez-sneakers","name":"Tenis Balenciaga Runner","price":1250,"category":"balenciaga","image":"/assets/products/hdz-sneakers/balenciaga3.jpeg","description":"Tenis Balenciaga cómodos.","featured":false,"active":true},
     {"id":23,"store":"hernandez-sneakers","name":"Tenis Balenciaga Classic","price":1250,"category":"balenciaga","image":"/assets/products/hdz-sneakers/balenciaga4.jpeg","description":"Diseño Balenciaga elegante.","featured":false,"active":true},
     {"id":24,"store":"hernandez-sneakers","name":"Tenis Balenciaga Motion","price":1250,"category":"balenciaga","image":"/assets/products/hdz-sneakers/balenciaga5.jpeg","description":"Tenis Balenciaga estilo moderno.","featured":false,"active":true},
