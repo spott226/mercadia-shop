@@ -187,18 +187,21 @@ cursor:pointer;
 margin-top:10px;
 }
 
-/* CHATBOT */
+/* ===============================
+CHATBOT UNIVERSAL (MULTI TIENDA)
+usa variables del tema
+================================ */
 
 .chatbot{
 
 position:fixed;
-bottom:20px;
-right:20px;
+bottom:24px;
+right:24px;
 
-width:55px;
-height:55px;
+width:58px;
+height:58px;
 
-background:#25D366;
+background:var(--primary);
 color:white;
 
 border-radius:50%;
@@ -210,39 +213,91 @@ justify-content:center;
 font-size:22px;
 cursor:pointer;
 
-box-shadow:0 5px 20px rgba(0,0,0,.3);
+box-shadow:0 10px 25px rgba(0,0,0,.35);
+
+z-index:9999;
+
+transition:.2s;
 
 }
+
+.chatbot:hover{
+transform:scale(1.08);
+}
+
+
+/* CAJA DEL BOT */
 
 .chatbot-box{
 
 position:fixed;
-bottom:90px;
-right:20px;
+bottom:95px;
+right:24px;
 
-width:260px;
+width:300px;
 max-height:420px;
 
 overflow-y:auto;
 
-background:white;
-padding:20px;
+background:var(--card);
+color:var(--text);
 
-border-radius:12px;
+border-radius:14px;
 
-box-shadow:0 10px 30px rgba(0,0,0,.2);
+padding:18px;
+
+box-shadow:0 15px 35px rgba(0,0,0,.35);
 
 display:none;
+
 z-index:9999;
 
 }
 
-.product-card h3{
-color:var(--text);
-font-weight:600;
+
+/* TEXTO */
+
+.chatbot-box p{
+margin-top:0;
+font-size:14px;
+opacity:.9;
 }
 
-.product-card p{
-color:var(--accent);
-font-weight:700;
+
+/* BOTONES */
+
+.chatbot-box button{
+
+width:100%;
+
+margin-top:8px;
+
+padding:10px 12px;
+
+border:none;
+
+border-radius:8px;
+
+background:var(--primary);
+color:white;
+
+font-size:14px;
+
+cursor:pointer;
+
+transition:.15s;
+
+}
+
+.chatbot-box button:hover{
+opacity:.85;
+}
+
+.chatbot-box::-webkit-scrollbar{
+width:6px;
+}
+
+.chatbot-box::-webkit-scrollbar-thumb{
+background:var(--accent);
+border-radius:6px;
 }

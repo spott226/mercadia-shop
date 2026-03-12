@@ -9,13 +9,13 @@ document.body.classList.add("theme-xxx")
 TEMA STREETWEAR / SNEAKERS
 -------------------------------- */
 
-.theme-street{
+.theme-urban{
 
---primary:#0ea5e9;
---background:#020617;
---card:#111827;
---text:#ffffff;
---accent:#38bdf8;
+--primary:#111827;      /* negro grafito */
+--background:#020617;   /* fondo profundo */
+--card:#0f172a;         /* tarjetas oscuras elegantes */
+--text:#f1f5f9;         /* texto claro suave */
+--accent:#f59e0b;       /* dorado urbano */
 
 }
 
