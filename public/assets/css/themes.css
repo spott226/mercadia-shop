@@ -6,30 +6,64 @@ document.body.classList.add("theme-xxx")
 
 
 /* -------------------------------
-TEMA STREETWEAR / SNEAKERS
+TEMA URBAN / STREETWEAR PREMIUM
 -------------------------------- */
 
 .theme-urban{
 
---primary:#22c55e;      /* verde sneaker estilo StockX */
---background:#020617;   /* fondo oscuro */
---card:#111827;         /* tarjetas */
---text:#f8fafc;         /* texto fuerte */
---accent:#38bdf8;       /* azul brillante */
+--primary:#22c55e;      /* verde sneaker premium */
+--background:#020617;   /* negro profundo */
+--card:#0f172a;         /* tarjetas elegantes */
+--text:#f8fafc;         /* blanco limpio */
+--accent:#38bdf8;       /* azul eléctrico */
 
 }
+
+/* detalles visuales específicos del tema urban */
+
+.theme-urban .product-card{
+border:1px solid rgba(255,255,255,.06);
+}
+
+.theme-urban .product-card:hover{
+border-color:rgba(34,197,94,.35);
+}
+
+.theme-urban .categories button{
+background:#0f172a;
+border:1px solid rgba(255,255,255,.1);
+color:#f8fafc;
+}
+
+.theme-urban .categories button:hover{
+background:#22c55e;
+color:#020617;
+}
+
 
 /* -------------------------------
 TEMA SPA / BELLEZA
 -------------------------------- */
+
 .theme-spa{
 
---primary:#8b6f5a;        /* café suave elegante */
---background:#f7f3ef;     /* crema */
---card:#ffffff;           /* tarjetas limpias */
---text:#3a2e27;           /* texto café oscuro */
---accent:#cbb8a8;         /* beige elegante */
+--primary:#8b6f5a;
+--background:#f7f3ef;
+--card:#ffffff;
+--text:#3a2e27;
+--accent:#cbb8a8;
 
+}
+
+.theme-spa .categories button{
+background:#ffffff;
+border:1px solid #e6ded7;
+color:#3a2e27;
+}
+
+.theme-spa .categories button:hover{
+background:#8b6f5a;
+color:white;
 }
 
 
@@ -47,6 +81,19 @@ TEMA PERFUMERIA
 
 }
 
+.theme-perfume .product-card{
+border:1px solid rgba(255,255,255,.08);
+}
+
+.theme-perfume .categories button{
+background:#312e81;
+border:1px solid rgba(255,255,255,.1);
+}
+
+.theme-perfume .categories button:hover{
+background:#7c3aed;
+}
+
 
 /* -------------------------------
 TEMA MINIMAL / GENERAL
@@ -62,10 +109,20 @@ TEMA MINIMAL / GENERAL
 
 }
 
+.theme-minimal .categories button{
+background:#f3f4f6;
+color:#111827;
+border:1px solid #e5e7eb;
+}
+
+.theme-minimal .categories button:hover{
+background:#111827;
+color:white;
+}
 
 
 /* ===============================
-ELEMENTOS UI (globales)
+ELEMENTOS UI (GLOBAL)
 ================================ */
 
 button{
@@ -80,7 +137,5 @@ border-radius:6px;
 }
 
 button:hover{
-
-opacity:0.85;
-
+opacity:0.9;
 }

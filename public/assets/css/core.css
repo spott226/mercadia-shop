@@ -35,7 +35,7 @@ font-size:18px;
 .search-container{
 padding:20px 30px;
 background:var(--card);
-border-bottom:1px solid #eee;
+border-bottom:1px solid rgba(0,0,0,.1);
 }
 
 #search-input{
@@ -43,8 +43,9 @@ width:100%;
 max-width:600px;
 padding:12px;
 font-size:16px;
-border:1px solid #ddd;
+border:1px solid rgba(0,0,0,.15);
 border-radius:6px;
+background:white;
 }
 
 /* CATEGORIAS */
@@ -55,7 +56,7 @@ display:flex;
 gap:10px;
 flex-wrap:wrap;
 background:var(--background);
-border-bottom:1px solid #eee;
+border-bottom:1px solid rgba(0,0,0,.08);
 }
 
 .categories button{
@@ -69,7 +70,7 @@ color:white;
 }
 
 .categories button:hover{
-opacity:0.85;
+opacity:.85;
 }
 
 /* GRID PRODUCTOS */
@@ -86,18 +87,17 @@ margin:auto;
 /* TARJETA PRODUCTO */
 
 .product-card{
-background:#111827;
+background:var(--card);
 border-radius:12px;
 padding:20px;
-box-shadow:0 10px 25px rgba(0,0,0,.4);
-transition:0.25s;
+box-shadow:0 10px 25px rgba(0,0,0,.2);
+transition:.2s;
 text-align:center;
-border:1px solid #1f2937;
 }
 
 .product-card:hover{
-transform:translateY(-6px);
-box-shadow:0 15px 40px rgba(0,0,0,.6);
+transform:translateY(-4px);
+box-shadow:0 15px 40px rgba(0,0,0,.25);
 }
 
 .product-card img{
@@ -111,14 +111,14 @@ margin-bottom:12px;
 .product-card h3{
 font-size:18px;
 margin:10px 0;
-color:#f8fafc;
+color:var(--text);
 font-weight:600;
 }
 
 .product-card p{
 font-size:18px;
 font-weight:700;
-color:#22c55e; /* precio verde resaltado */
+color:var(--accent);
 margin-bottom:12px;
 }
 
@@ -127,8 +127,8 @@ margin-bottom:12px;
 .product-card button{
 padding:10px 16px;
 border:none;
-background:#22c55e;
-color:#020617;
+background:var(--primary);
+color:white;
 border-radius:6px;
 cursor:pointer;
 font-size:14px;
@@ -136,7 +136,7 @@ font-weight:600;
 }
 
 .product-card button:hover{
-opacity:0.85;
+opacity:.9;
 }
 
 /* CARRITO */
@@ -148,14 +148,13 @@ right:20px;
 width:320px;
 max-height:80vh;
 overflow-y:auto;
-background:white;
+background:var(--card);
 box-shadow:0 10px 30px rgba(0,0,0,.2);
 border-radius:12px;
 padding:20px;
 display:none;
 z-index:9999;
 }
-
 
 .cart-item{
 display:flex;
@@ -185,7 +184,7 @@ border-radius:4px;
 width:100%;
 padding:12px;
 border:none;
-background:#25D366;
+background:var(--primary);
 color:white;
 font-size:16px;
 border-radius:6px;
@@ -193,142 +192,56 @@ cursor:pointer;
 margin-top:10px;
 }
 
-/* ===============================
-CHATBOT UNIVERSAL MULTI-TIENDA
-adaptable a cualquier tema
-================================ */
+/* CHATBOT */
 
 .chatbot{
-
 position:fixed;
 bottom:24px;
 right:24px;
-
 width:60px;
 height:60px;
-
 background:var(--primary);
 color:#fff;
-
 border-radius:50%;
-
 display:flex;
 align-items:center;
 justify-content:center;
-
 font-size:24px;
 cursor:pointer;
-
 box-shadow:0 12px 28px rgba(0,0,0,.35);
-
 z-index:9999;
-
 transition:.2s;
-
 }
 
 .chatbot:hover{
 transform:scale(1.08);
-box-shadow:0 16px 35px rgba(0,0,0,.45);
 }
 
-
-/* ===============================
-CAJA DEL CHATBOT
-================================ */
-
 .chatbot-box{
-
 position:fixed;
 bottom:100px;
 right:24px;
-
 width:320px;
 max-height:420px;
-
 overflow-y:auto;
-
 background:var(--card);
 color:var(--text);
-
 border-radius:16px;
-
 padding:20px;
-
 box-shadow:0 20px 45px rgba(0,0,0,.45);
-
-border:1px solid rgba(255,255,255,.06);
-
 display:none;
-
 z-index:9999;
-
 }
-
-
-/* ===============================
-TEXTOS
-================================ */
-
-.chatbot-box p{
-
-margin:0 0 10px 0;
-
-font-size:14px;
-font-weight:500;
-
-line-height:1.4;
-
-}
-
-
-/* ===============================
-BOTONES
-================================ */
 
 .chatbot-box button{
-
 width:100%;
-
 margin-top:8px;
-
 padding:11px 14px;
-
 border:none;
-
 border-radius:10px;
-
 background:var(--primary);
 color:white;
-
 font-size:14px;
 font-weight:600;
-
 cursor:pointer;
-
-transition:.15s;
-
-}
-
-.chatbot-box button:hover{
-
-transform:translateY(-1px);
-opacity:.9;
-
-}
-
-
-/* ===============================
-SCROLLBAR
-================================ */
-
-.chatbot-box::-webkit-scrollbar{
-width:6px;
-}
-
-.chatbot-box::-webkit-scrollbar-thumb{
-
-background:var(--accent);
-border-radius:6px;
-
 }
