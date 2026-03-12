@@ -33,7 +33,7 @@
     {"id":28,"store":"hernandez-sneakers","name":"Tenis DC Skate","price":1250,"category":"DC","image":"/assets/products/hdz-sneakers/dc.jpeg","description":"Tenis DC estilo skate urbano.","featured":false,"active":true},
 
     {"id":29,"store":"hernandez-sneakers","name":"Playera Dolce Gabbana","price":150,"category":"Dolce Gabbana","image":"/assets/products/hdz-sneakers/dg1.jpeg","description":"Playera Dolce & Gabbana moderna.","featured":false,"active":true},
-    {"id":30,"store":"hernandez-sneakers","name":"Playera Dolce Gabbana Casual","price":150,"category":"dg","image":"/assets/products/hdz-sneakers/dg2.jpeg","description":"Playera Dolce & Gabbana casual.","featured":false,"active":true},
+    {"id":30,"store":"hernandez-sneakers","name":"Playera Dolce Gabbana Casual","price":150,"category":"Dolce Gabbana","image":"/assets/products/hdz-sneakers/dg2.jpeg","description":"Playera Dolce & Gabbana casual.","featured":false,"active":true},
 
     {"id":31,"store":"hernandez-sneakers","name":"Tenis Dior Luxury","price":1250,"category":"Dior","image":"/assets/products/hdz-sneakers/dior1.jpeg","description":"Tenis Dior elegantes.","featured":false,"active":true},
 
