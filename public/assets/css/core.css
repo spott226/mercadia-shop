@@ -86,16 +86,18 @@ margin:auto;
 /* TARJETA PRODUCTO */
 
 .product-card{
-background:var(--card);
-border-radius:10px;
+background:#111827;
+border-radius:12px;
 padding:20px;
-box-shadow:0 4px 10px rgba(0,0,0,0.05);
-transition:0.2s;
+box-shadow:0 10px 25px rgba(0,0,0,.4);
+transition:0.25s;
 text-align:center;
+border:1px solid #1f2937;
 }
 
 .product-card:hover{
-transform:translateY(-4px);
+transform:translateY(-6px);
+box-shadow:0 15px 40px rgba(0,0,0,.6);
 }
 
 .product-card img{
@@ -109,11 +111,14 @@ margin-bottom:12px;
 .product-card h3{
 font-size:18px;
 margin:10px 0;
+color:#f8fafc;
+font-weight:600;
 }
 
 .product-card p{
-font-size:16px;
-font-weight:bold;
+font-size:18px;
+font-weight:700;
+color:#22c55e; /* precio verde resaltado */
 margin-bottom:12px;
 }
 
@@ -122,11 +127,12 @@ margin-bottom:12px;
 .product-card button{
 padding:10px 16px;
 border:none;
-background:var(--primary);
-color:white;
+background:#22c55e;
+color:#020617;
 border-radius:6px;
 cursor:pointer;
 font-size:14px;
+font-weight:600;
 }
 
 .product-card button:hover{
@@ -188,8 +194,8 @@ margin-top:10px;
 }
 
 /* ===============================
-CHATBOT UNIVERSAL (MULTI TIENDA)
-usa variables del tema
+CHATBOT UNIVERSAL MULTI-TIENDA
+adaptable a cualquier tema
 ================================ */
 
 .chatbot{
@@ -198,11 +204,11 @@ position:fixed;
 bottom:24px;
 right:24px;
 
-width:58px;
-height:58px;
+width:60px;
+height:60px;
 
 background:var(--primary);
-color:white;
+color:#fff;
 
 border-radius:50%;
 
@@ -210,10 +216,10 @@ display:flex;
 align-items:center;
 justify-content:center;
 
-font-size:22px;
+font-size:24px;
 cursor:pointer;
 
-box-shadow:0 10px 25px rgba(0,0,0,.35);
+box-shadow:0 12px 28px rgba(0,0,0,.35);
 
 z-index:9999;
 
@@ -223,18 +229,21 @@ transition:.2s;
 
 .chatbot:hover{
 transform:scale(1.08);
+box-shadow:0 16px 35px rgba(0,0,0,.45);
 }
 
 
-/* CAJA DEL BOT */
+/* ===============================
+CAJA DEL CHATBOT
+================================ */
 
 .chatbot-box{
 
 position:fixed;
-bottom:95px;
+bottom:100px;
 right:24px;
 
-width:300px;
+width:320px;
 max-height:420px;
 
 overflow-y:auto;
@@ -242,11 +251,13 @@ overflow-y:auto;
 background:var(--card);
 color:var(--text);
 
-border-radius:14px;
+border-radius:16px;
 
-padding:18px;
+padding:20px;
 
-box-shadow:0 15px 35px rgba(0,0,0,.35);
+box-shadow:0 20px 45px rgba(0,0,0,.45);
+
+border:1px solid rgba(255,255,255,.06);
 
 display:none;
 
@@ -255,16 +266,25 @@ z-index:9999;
 }
 
 
-/* TEXTO */
+/* ===============================
+TEXTOS
+================================ */
 
 .chatbot-box p{
-margin-top:0;
+
+margin:0 0 10px 0;
+
 font-size:14px;
-opacity:.9;
+font-weight:500;
+
+line-height:1.4;
+
 }
 
 
-/* BOTONES */
+/* ===============================
+BOTONES
+================================ */
 
 .chatbot-box button{
 
@@ -272,16 +292,17 @@ width:100%;
 
 margin-top:8px;
 
-padding:10px 12px;
+padding:11px 14px;
 
 border:none;
 
-border-radius:8px;
+border-radius:10px;
 
 background:var(--primary);
 color:white;
 
 font-size:14px;
+font-weight:600;
 
 cursor:pointer;
 
@@ -290,14 +311,24 @@ transition:.15s;
 }
 
 .chatbot-box button:hover{
-opacity:.85;
+
+transform:translateY(-1px);
+opacity:.9;
+
 }
+
+
+/* ===============================
+SCROLLBAR
+================================ */
 
 .chatbot-box::-webkit-scrollbar{
 width:6px;
 }
 
 .chatbot-box::-webkit-scrollbar-thumb{
+
 background:var(--accent);
 border-radius:6px;
+
 }

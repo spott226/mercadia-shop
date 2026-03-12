@@ -30,7 +30,7 @@
     {"id":25,"store":"hernandez-sneakers","name":"Tenis Balenciaga Street Comfort","price":1250,"category":"balenciaga","image":"/assets/products/hdz-sneakers/balenciaga6.jpeg","description":"Tenis Balenciaga urbanos.","featured":false,"active":true},
 
     {"id":26,"store":"hernandez-sneakers","name":"Tenis Boss Urban","price":1250,"category":"boss","image":"/assets/products/hdz-sneakers/boss1.jpeg","description":"Tenis Hugo Boss estilo casual.","featured":false,"active":true},
-    {"id":27,"store":"hernandez-sneakers","name":"Playera Bunny Casual","price":150,"category":"bunny","image":"/assets/products/hdz-sneakers/bunny1.jpeg","description":"Playera casual cómoda.","featured":false,"active":true},
+    {"id":27,"store":"hernandez-sneakers","name":"Playera Bunny Casual","price":150,"category":"bunny","image":"/assets/products/hdz-sneakers/bunny1.jpeg","description":"Playera casual cómoda.","featured":true,"active":true},
     {"id":28,"store":"hernandez-sneakers","name":"Tenis DC Skate","price":1250,"category":"dc","image":"/assets/products/hdz-sneakers/dc.jpeg","description":"Tenis DC estilo skate urbano.","featured":false,"active":true},
 
     {"id":29,"store":"hernandez-sneakers","name":"Playera Dolce Gabbana","price":150,"category":"dg","image":"/assets/products/hdz-sneakers/dg1.jpeg","description":"Playera Dolce & Gabbana moderna.","featured":false,"active":true},

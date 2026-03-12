@@ -11,14 +11,13 @@ TEMA STREETWEAR / SNEAKERS
 
 .theme-urban{
 
---primary:#111827;      /* negro grafito */
---background:#020617;   /* fondo profundo */
---card:#0f172a;         /* tarjetas oscuras elegantes */
---text:#f1f5f9;         /* texto claro suave */
---accent:#f59e0b;       /* dorado urbano */
+--primary:#22c55e;      /* verde sneaker estilo StockX */
+--background:#020617;   /* fondo oscuro */
+--card:#111827;         /* tarjetas */
+--text:#f8fafc;         /* texto fuerte */
+--accent:#38bdf8;       /* azul brillante */
 
 }
-
 
 /* -------------------------------
 TEMA SPA / BELLEZA
