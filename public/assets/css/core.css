@@ -52,25 +52,49 @@ background:white;
 
 .categories{
 padding:20px 30px;
-display:flex;
-gap:10px;
-flex-wrap:wrap;
+display:grid;
+grid-template-columns:repeat(auto-fill,minmax(120px,1fr));
+gap:15px;
 background:var(--background);
 border-bottom:1px solid rgba(0,0,0,.08);
 }
 
-.categories button{
-padding:8px 16px;
-border:none;
-border-radius:20px;
-background:var(--accent);
+/* TARJETA DE CATEGORIA */
+
+.category-card{
+
+display:flex;
+align-items:center;
+justify-content:center;
+
+background:var(--card);
+color:var(--text);
+
+border-radius:12px;
+
+padding:18px;
+
+font-weight:600;
+font-size:15px;
+
+text-align:center;
+
 cursor:pointer;
-font-size:14px;
-color:white;
+
+border:1px solid rgba(0,0,0,.08);
+
+transition:.2s;
+
 }
 
-.categories button:hover{
-opacity:.85;
+.category-card:hover{
+
+transform:translateY(-3px);
+
+border-color:var(--primary);
+
+color:var(--primary);
+
 }
 
 /* GRID PRODUCTOS */

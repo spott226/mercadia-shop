@@ -74,7 +74,7 @@
 {"id":57,"store":"hernandez-sneakers","name":"Tenis Jordan Street Sport Pro","price":1250,"category":"jordan","image":"/assets/products/hdz-sneakers/jordan25.jpeg","description":"Modelo Jordan deportivo urbano.","featured":false,"active":true},
 {"id":58,"store":"hernandez-sneakers","name":"Tenis Jordan Urban Street Pro","price":1250,"category":"jordan","image":"/assets/products/hdz-sneakers/jordan26.jpeg","description":"Tenis Jordan urbanos premium.","featured":false,"active":true},
 {"id":59,"store":"hernandez-sneakers","name":"Tenis Jordan Street Motion Pro","price":1250,"category":"jordan","image":"/assets/products/hdz-sneakers/jordan27.jpeg","description":"Tenis Jordan estilo moderno.","featured":false,"active":true},
-{"id":60,"store":"hernandez-sneakers","name":"Tenis Jordan Urban Runner Elite","price":1250,"category":"jordan","image":"/assets/products/hdz-sneakers/jordan28.jpeg","description":"Tenis Jordan runner urbano.","featured":false,"active":true},
+{"id":98,"store":"hernandez-sneakers","name":"Tenis Jordan Urban Runner Elite","price":1250,"category":"jordan","image":"/assets/products/hdz-sneakers/jordan28.jpeg","description":"Tenis Jordan runner urbano.","featured":false,"active":true},
 {"id":61,"store":"hernandez-sneakers","name":"Tenis Jordan Street Classic Pro","price":1250,"category":"jordan","image":"/assets/products/hdz-sneakers/jordan29.jpeg","description":"Modelo Jordan clásico urbano.","featured":false,"active":true},
 
 {"id":62,"store":"hernandez-sneakers","name":"Tenis Lacoste Urban","price":1250,"category":"lacoste","image":"/assets/products/hdz-sneakers/lacoste1.jpeg","description":"Tenis Lacoste elegantes y modernos.","featured":false,"active":true},
@@ -87,7 +87,7 @@
 {"id":67,"store":"hernandez-sneakers","name":"Playera Michael Kors","price":150,"category":"mk","image":"/assets/products/hdz-sneakers/mk1.jpeg","description":"Playera Michael Kors moderna.","featured":false,"active":true},
 
 {"id":68,"store":"hernandez-sneakers","name":"Tenis New Balance Urban","price":1250,"category":"nb","image":"/assets/products/hdz-sneakers/nb1.jpeg","description":"Tenis New Balance cómodos.","featured":false,"active":true},
-{"id":69,"store":"hernandez-sneakers","name":"Tenis New Balance Street","price":1250,"category":"nb","image":"/assets/products/hdz-sneakers/nb2.jpeg","description":"Modelo New Balance urbano.","featured":false,"active":true},
+{"id":99,"store":"hernandez-sneakers","name":"Tenis New Balance Street","price":1250,"category":"nb","image":"/assets/products/hdz-sneakers/nb2.jpeg","description":"Modelo New Balance urbano.","featured":false,"active":true},
  
 {"id":70,"store":"hernandez-sneakers","name":"Tenis Nike Street Runner","price":1250,"category":"nike","image":"/assets/products/hdz-sneakers/nike4.jpeg","description":"Tenis Nike estilo urbano moderno.","featured":false,"active":true},
 {"id":71,"store":"hernandez-sneakers","name":"Tenis Nike Urban Motion","price":1250,"category":"nike","image":"/assets/products/hdz-sneakers/nike5.jpeg","description":"Modelo Nike cómodo para uso diario.","featured":false,"active":true},
