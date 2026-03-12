@@ -1,0 +1,16 @@
+    {
+  "stores": [
+    {
+      "id": "hernandez-snickers",
+      "name": "Hernandez Snickers",
+      "whatsapp": "3312436092",
+      "currency": "MXN",
+      "hero": "/assets/heroes/cheli.jpg",
+      "plan": "pro",
+      "theme": "street",
+      "logo": "/assets/logos/hdz.jpeg",
+      "active": true
+    }
+
+  ]
+}
