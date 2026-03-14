@@ -9,9 +9,9 @@ let botCart = [];
 
 document.addEventListener("DOMContentLoaded", () => {
 
-  fetch("data/products.json")
-    .then(res => res.json())
-    .then(data => {
+      fetch(`data/products/${store}.json`)
+  .then(res => res.json())
+  .then(data => {
 
       const host = window.location.hostname;
       const subdomain = host.split(".")[0].toLowerCase();
