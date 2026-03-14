@@ -1,25 +1,29 @@
 let botStep = 0;
+let selectedCategory = null;
 let storeWhats = "";
 let botCart = [];
 
 /* ================================
-   CARGAR PRODUCTOS DE LA TIENDA
+   OBTENER WHATSAPP DE LA TIENDA
 ================================ */
 
 document.addEventListener("DOMContentLoaded", () => {
 
-  const host = window.location.hostname;
-  const store = host.split(".")[0].toLowerCase();
+      fetch(`data/products/${store}.json`)
+  .then(res => res.json())
+  .then(data => {
 
-  fetch(`data/products/${store}.json`)
-    .then(res => res.json())
-    .then(data => {
+      const host = window.location.hostname;
+      const subdomain = host.split(".")[0].toLowerCase();
 
-      window.allProducts = data.products || [];
+      const storeData = data.stores.find(
+        s => s.id.toLowerCase() === subdomain
+      );
 
-    })
-    .catch(() => {
-      window.allProducts = [];
+      if (storeData) {
+        storeWhats = storeData.whatsapp || "";
+      }
+
     });
 
 });
@@ -68,11 +72,19 @@ function botStart(){
   Ver productos
   </button>
 
+  <button id="bot-whatsapp-directo">
+  Hablar por WhatsApp
+  </button>
+
   `;
 
   document
   .getElementById("bot-ver-productos")
   .addEventListener("click", botCategorias);
+
+  document
+  .getElementById("bot-whatsapp-directo")
+  .addEventListener("click", botWhatsDirect);
 
 }
 
@@ -292,10 +304,10 @@ function botMostrarPedido(){
 
 function botEnviarPedido(){
 
-  const host = window.location.hostname;
-  const store = host.split(".")[0].toLowerCase();
+  if(!storeWhats) return;
 
   let message = "Hola quiero comprar:%0A%0A";
+
   let total = 0;
 
   botCart.forEach(p => {
@@ -308,7 +320,7 @@ function botEnviarPedido(){
   message += `%0ATotal: $${total}`;
 
   window.open(
-    `https://wa.me/?text=${message}`,
+    `https://wa.me/${storeWhats}?text=${message}`,
     "_blank"
   );
 
@@ -323,6 +335,22 @@ function botVaciar(){
 
   botCart = [];
   botCategorias();
+
+}
+
+
+/* ================================
+   WHATSAPP DIRECTO
+================================ */
+
+function botWhatsDirect(){
+
+  if(!storeWhats) return;
+
+  window.open(
+    `https://wa.me/${storeWhats}`,
+    "_blank"
+  );
 
 }
 
